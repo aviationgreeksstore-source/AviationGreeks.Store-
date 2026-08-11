@@ -3,8 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { useCart } from './CartContext';
-import SwipeToCheckout from './SwipeToCheckout';
-import TransponderDiscount from '../checkout/TransponderDiscount';
 
 export default function SlideOutCart() {
   const { cart, isCartOpen, closeCart, removeFromCart, updateQuantity } = useCart();
@@ -14,27 +12,27 @@ export default function SlideOutCart() {
   const lines = cart?.lines?.edges || [];
   const subtotal = cart?.cost?.subtotalAmount?.amount || '0.00';
   const currencyCode = cart?.cost?.subtotalAmount?.currencyCode || 'USD';
-  
+
   const formattedSubtotal = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currencyCode,
   }).format(parseFloat(subtotal));
 
   return (
-    <div className="fixed inset-0 z-[150] flex justify-end">
+    <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/60 transition-opacity"
         onClick={closeCart}
       />
-      
+
       {/* Slide-out panel */}
       <div className="relative w-full sm:w-[400px] max-w-[100vw] bg-[#050505] border-l border-white/10 shadow-xl flex flex-col h-full transform transition-transform duration-300">
-        
+
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <h2 className="text-2xl font-bold uppercase tracking-wider text-white">Your Cart</h2>
-          <button 
+          <button
             onClick={closeCart}
             className="p-2 text-gray-400 hover:text-white transition-colors"
           >
@@ -66,8 +64,8 @@ export default function SlideOutCart() {
                   </button>
                   <div className="w-20 h-24 bg-zinc-800 rounded-sm overflow-hidden flex-shrink-0 relative">
                     {product.featuredImage?.url ? (
-                      <Image 
-                        src={product.featuredImage.url} 
+                      <Image
+                        src={product.featuredImage.url}
                         alt={product.featuredImage.altText || product.title}
                         fill
                         className="object-cover w-full h-full"
@@ -106,13 +104,17 @@ export default function SlideOutCart() {
 
         {/* Footer with Checkout button */}
         {lines.length > 0 && (
-          <div className="p-6 border-t border-white/10 bg-[#050505] flex flex-col gap-6">
-            <TransponderDiscount />
-            <div className="flex justify-between items-center">
+          <div className="p-6 border-t border-white/10 bg-[#050505]">
+            <div className="flex justify-between items-center mb-6">
               <span className="text-gray-400">Subtotal</span>
               <span className="text-2xl font-bold text-white">{formattedSubtotal}</span>
             </div>
-            <SwipeToCheckout checkoutUrl={cart.checkoutUrl} />
+            <a
+              href={cart.checkoutUrl}
+              className="block w-full py-4 text-center bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition-colors rounded-sm"
+            >
+              Secure Checkout
+            </a>
           </div>
         )}
       </div>
