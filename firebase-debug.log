@@ -1,0 +1,30 @@
+[debug] [2026-08-11T17:21:48.311Z] ----------------------------------------------------------------------
+[debug] [2026-08-11T17:21:48.317Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kouts\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting:github
+[debug] [2026-08-11T17:21:48.317Z] CLI Version:   15.26.0
+[debug] [2026-08-11T17:21:48.318Z] Platform:      win32
+[debug] [2026-08-11T17:21:48.318Z] Node Version:  v25.6.0
+[debug] [2026-08-11T17:21:48.318Z] Detected Agent: unknown
+[debug] [2026-08-11T17:21:48.318Z] Time:          Tue Aug 11 2026 20:21:48 GMT+0300 (Eastern European Summer Time)
+[debug] [2026-08-11T17:21:48.318Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\aviationgreeks-store-v2
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
