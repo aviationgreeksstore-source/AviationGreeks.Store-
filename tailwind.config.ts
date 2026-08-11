@@ -11,7 +11,8 @@ const config: Config = {
       colors: {
         tarmac: '#000000',
         carbon: '#1A1A1A',
-        'aviation-blue': '#2563EB',
+        'aegean-blue': '#0D3B66',
+        'flight-amber': '#FFBF00',
         cloud: '#FFFFFF',
         background: "var(--background)",
         foreground: "var(--foreground)",

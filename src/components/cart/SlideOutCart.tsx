@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useCart } from './CartContext';
+import SwipeToCheckout from './SwipeToCheckout';
 
 export default function SlideOutCart() {
   const { cart, isCartOpen, closeCart, removeFromCart, updateQuantity } = useCart();
@@ -19,7 +20,7 @@ export default function SlideOutCart() {
   }).format(parseFloat(subtotal));
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div className="fixed inset-0 z-[150] flex justify-end">
       {/* Backdrop */}
       <div 
         className="fixed inset-0 bg-black/60 transition-opacity"
@@ -109,12 +110,7 @@ export default function SlideOutCart() {
               <span className="text-gray-400">Subtotal</span>
               <span className="text-2xl font-bold text-white">{formattedSubtotal}</span>
             </div>
-            <a 
-              href={cart.checkoutUrl}
-              className="block w-full py-4 text-center bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition-colors rounded-sm"
-            >
-              Secure Checkout
-            </a>
+            <SwipeToCheckout checkoutUrl={cart.checkoutUrl} />
           </div>
         )}
       </div>

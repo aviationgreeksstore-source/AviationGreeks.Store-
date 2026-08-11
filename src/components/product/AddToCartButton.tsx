@@ -3,7 +3,15 @@
 import React, { useState } from 'react';
 import { useCart } from '../cart/CartContext';
 
-export default function AddToCartButton({ variantId }: { variantId: string | undefined }) {
+export default function AddToCartButton({ 
+  variantId,
+  productTitle,
+  price
+}: { 
+  variantId: string | undefined;
+  productTitle?: string;
+  price?: string;
+}) {
   const { addToCart } = useCart();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -11,7 +19,7 @@ export default function AddToCartButton({ variantId }: { variantId: string | und
     if (!variantId) return;
     try {
       setIsAdding(true);
-      await addToCart(variantId, 1);
+      await addToCart(variantId, 1, productTitle && price ? { title: productTitle, price } : undefined);
     } catch (error) {
       console.error("Failed to add item to cart:", error);
     } finally {

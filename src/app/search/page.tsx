@@ -27,7 +27,7 @@ export default async function SearchPage({
         </p>
         
         {products.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 md:gap-8">
             {products.map((product: any) => (
               <Link href={`/product/${product.handle}`} key={product.id} className="group cursor-pointer block">
                 <div className="aspect-[4/5] bg-neutral-800 rounded-sm mb-4 overflow-hidden relative">

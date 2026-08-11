@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Navbar() {
+export default function Navbar({ metarTicker }: { metarTicker?: React.ReactNode }) {
   const { cart, openCart } = useCart();
   const totalQuantity = cart?.totalQuantity || 0;
   const router = useRouter();
@@ -35,8 +35,11 @@ export default function Navbar() {
         <Link href="/community" className="text-sm font-medium hover:text-gray-300 transition-colors">Community</Link>
       </nav>
 
-      <div className="flex flex-1 justify-end items-center space-x-4">
-        <form onSubmit={handleSearch} className="hidden md:flex items-center">
+      <div className="flex flex-1 justify-end items-center space-x-4 min-w-0">
+        <div className="hidden md:block flex-1 min-w-0 truncate text-right">
+          {metarTicker}
+        </div>
+        <form onSubmit={handleSearch} className="hidden md:flex items-center flex-shrink-0">
           <input 
             type="text" 
             placeholder="Search gear..." 
@@ -50,7 +53,7 @@ export default function Navbar() {
             </svg>
           </button>
         </form>
-        <button onClick={openCart} className="relative p-2 hover:text-gray-300 transition-colors">
+        <button onClick={openCart} className="relative p-2 hover:text-gray-300 transition-colors flex-shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
           </svg>
@@ -93,10 +96,19 @@ export default function Navbar() {
             </div>
             
             <nav className="flex flex-col space-y-6 text-center mt-4">
-              <Link href="/collections" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-[#2563EB] transition-colors">Shop the Fleet</Link>
-              <Link href="/media" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-[#2563EB] transition-colors">Media</Link>
-              <Link href="/community" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-[#2563EB] transition-colors">Community</Link>
+              <Link href="/collections" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-aegean-blue transition-colors">Shop the Fleet</Link>
+              <Link href="/media" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-aegean-blue transition-colors">Media</Link>
+              <Link href="/community" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-aegean-blue transition-colors">Community</Link>
             </nav>
+            
+            <div className="flex justify-center mt-auto pb-12">
+              <div className="flex flex-col items-center">
+                <span className="text-xs text-gray-500 uppercase tracking-widest mb-4">Live Datalink</span>
+                <div className="bg-[#111111] py-3 px-2 rounded-sm border border-[#333333]">
+                  {metarTicker}
+                </div>
+              </div>
+            </div>
 
             <form onSubmit={(e) => { setIsMobileMenuOpen(false); handleSearch(e); }} className="mt-12 flex flex-col items-center">
               <div className="flex items-center w-full max-w-full sm:max-w-sm border-b border-white/20 pb-2">

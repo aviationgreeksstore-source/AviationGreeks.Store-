@@ -21,7 +21,7 @@ export default async function ProductRecommendations({ productId }: { productId:
     <section className="py-24 border-t border-neutral-900">
       <h2 className="text-3xl font-bold mb-12 text-center uppercase tracking-wide">You Might Also Like</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-8 sm:gap-y-8">
         {displayProducts.map((product) => (
           <Link href={`/product/${product.handle}`} key={product.id} className="group cursor-pointer block">
             <div className="aspect-[4/5] bg-neutral-800 rounded-sm mb-4 overflow-hidden relative">

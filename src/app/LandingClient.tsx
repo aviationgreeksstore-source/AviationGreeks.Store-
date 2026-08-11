@@ -7,26 +7,15 @@ import Link from "next/link";
 import Image from "next/image";
 import NewsletterForm from "@/components/newsletter/NewsletterForm";
 import QuickAddButton from "@/components/cart/QuickAddButton";
+import { takeoffVariant, hudRevealVariant, approachStaggerContainer } from "@/lib/animations";
 
-export default function LandingClient({ products }: { products: any[] }) {
-  // Framer Motion variants
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
+export default function LandingClient({ products, shopByCategory }: { products: any[], shopByCategory?: React.ReactNode }) {
+  // Map local variants to the new global aviation variants
+  const fadeIn = hudRevealVariant;
+  const staggerContainer = approachStaggerContainer;
 
   return (
-    <div className="bg-[#000000] text-[#FFFFFF] selection:bg-[#2563EB] selection:text-white">
+    <div className="bg-[#000000] text-[#FFFFFF] selection:bg-aegean-blue selection:text-white">
       {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center justify-center overflow-hidden border-b border-[#333333]">
         {/* Background Image */}
@@ -53,7 +42,7 @@ export default function LandingClient({ products }: { products: any[] }) {
           >
             Gear for people <br />
             who actually <br />
-            <span className="text-[#2563EB]">
+            <span className="text-aegean-blue">
               fly.
             </span>
           </motion.h1>
@@ -74,7 +63,7 @@ export default function LandingClient({ products }: { products: any[] }) {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-[#2563EB] text-white text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+                className="px-10 py-5 bg-aegean-blue text-white text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]"
               >
                 Shop the Fleet
               </motion.button>
@@ -90,6 +79,27 @@ export default function LandingClient({ products }: { products: any[] }) {
             </Link>
           </motion.div>
 
+          {/* Runway Approach Lighting (Rabbit Strobe) */}
+          <motion.div
+            variants={fadeIn}
+            className="flex items-center justify-center space-x-4 mt-12 mb-2"
+          >
+            {[...Array(5)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0.1 }}
+                animate={{ opacity: [0.1, 1, 0.1] }}
+                transition={{
+                  duration: 1.2,
+                  repeat: Infinity,
+                  delay: i * 0.15,
+                  ease: "linear"
+                }}
+                className="w-1.5 h-1.5 rounded-full bg-flight-amber shadow-[0_0_12px_rgba(255,191,0,0.9)]"
+              />
+            ))}
+          </motion.div>
+
           {/* Social Proof */}
           <motion.div
             variants={fadeIn}
@@ -97,7 +107,7 @@ export default function LandingClient({ products }: { products: any[] }) {
           >
             <div className="flex items-center space-x-1">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 text-[#2563EB] fill-[#2563EB]" />
+                <Star key={i} className="w-5 h-5 text-aegean-blue fill-aegean-blue" />
               ))}
             </div>
             <p className="text-sm font-bold uppercase tracking-widest text-gray-300">
@@ -117,7 +127,7 @@ export default function LandingClient({ products }: { products: any[] }) {
             variants={fadeIn}
             className="flex flex-col items-center text-center space-y-4"
           >
-            <Globe2 className="w-10 h-10 text-[#2563EB]" />
+            <Globe2 className="w-10 h-10 text-aegean-blue" />
             <h3 className="text-xl font-bold uppercase tracking-wider">
               Global Shipping
             </h3>
@@ -132,7 +142,7 @@ export default function LandingClient({ products }: { products: any[] }) {
             variants={fadeIn}
             className="flex flex-col items-center text-center space-y-4"
           >
-            <ShieldCheck className="w-10 h-10 text-[#2563EB]" />
+            <ShieldCheck className="w-10 h-10 text-aegean-blue" />
             <h3 className="text-xl font-bold uppercase tracking-wider">
               Secure Checkout
             </h3>
@@ -147,7 +157,7 @@ export default function LandingClient({ products }: { products: any[] }) {
             variants={fadeIn}
             className="flex flex-col items-center text-center space-y-4"
           >
-            <Award className="w-10 h-10 text-[#2563EB]" />
+            <Award className="w-10 h-10 text-aegean-blue" />
             <h3 className="text-xl font-bold uppercase tracking-wider">
               Premium Quality
             </h3>
@@ -158,77 +168,32 @@ export default function LandingClient({ products }: { products: any[] }) {
         </div>
       </section>
 
-      {/* Category Navigator (Paradox of Choice) */}
-      <section className="py-24 px-8 max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">
-            Shop by Category
-          </h2>
-          <div className="w-24 h-1 bg-[#2563EB] mx-auto mt-6"></div>
-        </motion.div>
+      {shopByCategory}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              title: "Apparel",
-              image:
-                "https://images.unsplash.com/photo-1529336953128-a85760f58cb5?q=80&w=2070&auto=format&fit=crop",
-              href: "/collections/apparel",
-            },
-            {
-              title: "Accessories",
-              image:
-                "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop",
-              href: "/collections/accessories",
-            },
-            {
-              title: "Headwear",
-              image:
-                "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=2036&auto=format&fit=crop",
-              href: "/collections/headwear",
-            },
-          ].map((cat, idx) => (
-            <Link href={cat.href} key={idx}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                whileHover="hover"
-                className="relative aspect-square overflow-hidden rounded-sm cursor-pointer group h-full"
-              >
-                <Image
-                  src={cat.image}
-                  alt={cat.title}
-                  fill
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-500" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-                  <h3 className="text-3xl font-black uppercase tracking-widest text-white mb-4">
-                    {cat.title}
-                  </h3>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    variants={{
-                      hover: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-                    }}
-                    className="flex items-center text-sm font-bold uppercase tracking-wider text-[#2563EB]"
-                  >
-                    Explore <ArrowRight className="ml-2 w-4 h-4" />
-                  </motion.div>
-                </div>
-              </motion.div>
-            </Link>
-          ))}
+      {/* PFD Horizon Divider */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 0.4, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="flex flex-col items-center justify-center w-full py-16 space-y-6 bg-tarmac"
+      >
+        <div className="flex items-end justify-between w-48 opacity-50">
+          <div className="w-16 h-[2px] bg-white relative"><div className="absolute right-0 top-0 h-2 w-[2px] bg-white"></div></div>
+          <span className="text-xs font-mono font-bold text-white">10</span>
+          <div className="w-16 h-[2px] bg-white relative"><div className="absolute left-0 top-0 h-2 w-[2px] bg-white"></div></div>
         </div>
-      </section>
+        <div className="flex items-end justify-between w-32 opacity-70">
+          <div className="w-10 h-[2px] bg-white relative"><div className="absolute right-0 top-0 h-2 w-[2px] bg-white"></div></div>
+          <span className="text-xs font-mono font-bold text-white">5</span>
+          <div className="w-10 h-[2px] bg-white relative"><div className="absolute left-0 top-0 h-2 w-[2px] bg-white"></div></div>
+        </div>
+        <div className="flex items-center justify-between w-64">
+          <div className="w-24 h-[3px] bg-aegean-blue"></div>
+          <div className="w-2 h-2 rounded-full bg-flight-amber shadow-[0_0_10px_rgba(255,191,0,0.8)]"></div>
+          <div className="w-24 h-[3px] bg-aegean-blue"></div>
+        </div>
+      </motion.div>
 
       {/* Featured Products / Scarcity */}
       <section className="py-24 px-8 bg-[#0A0A0A] border-t border-[#333333]">
@@ -246,18 +211,18 @@ export default function LandingClient({ products }: { products: any[] }) {
               </h2>
               <div className="flex items-center mt-2 space-x-3">
                 <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2563EB] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#2563EB]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-flight-amber opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-flight-amber"></span>
                 </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-[#2563EB]">
+                <span className="text-xs font-bold uppercase tracking-widest text-flight-amber">
                   Selling Fast
                 </span>
               </div>
-              <div className="w-24 h-1 bg-[#2563EB] mt-4"></div>
+              <div className="w-24 h-1 bg-aegean-blue mt-4"></div>
             </div>
             <Link
               href="/collections"
-              className="hidden md:flex items-center text-sm font-bold uppercase tracking-widest hover:text-[#2563EB] transition-colors"
+              className="hidden md:flex items-center text-sm font-bold uppercase tracking-widest hover:text-aegean-blue transition-colors"
             >
               View All <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
@@ -269,17 +234,23 @@ export default function LandingClient({ products }: { products: any[] }) {
               whileInView="visible"
               viewport={{ once: true }}
               variants={staggerContainer}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-6 sm:gap-y-12"
             >
               {products.map(({ node }, idx) => (
                 <motion.div
                   key={node.id}
-                  variants={fadeIn}
+                  variants={takeoffVariant}
                 >
-                  <Link href={`/product/${node.handle}`} className="group cursor-pointer flex flex-col h-full">
-                    <div className="relative aspect-[4/5] bg-[#111111] mb-6 overflow-hidden rounded-sm border border-[#333333] hover:border-[#2563EB] transition-colors duration-500">
+                  <Link href={`/product/${node.handle}`} className="group cursor-pointer flex flex-col h-full relative">
+                    <div className="relative aspect-[4/5] bg-[#111111] mb-6 overflow-hidden rounded-sm border border-[#333333] transition-colors duration-500">
+                      
+                      {/* HUD Hover Locks */}
+                      <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-transparent group-hover:border-aegean-blue transition-colors duration-300 z-30" />
+                      <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-transparent group-hover:border-aegean-blue transition-colors duration-300 z-30" />
+                      <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-transparent group-hover:border-aegean-blue transition-colors duration-300 z-30" />
+                      <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-transparent group-hover:border-aegean-blue transition-colors duration-300 z-30" />
                       {idx === 0 && (
-                        <div className="absolute top-4 left-4 z-20 bg-[#2563EB] text-white text-xs font-black uppercase tracking-widest px-3 py-1 shadow-lg">
+                        <div className="absolute top-4 left-4 z-20 bg-flight-amber text-black text-xs font-black uppercase tracking-widest px-3 py-1 shadow-lg">
                           Best Seller
                         </div>
                       )}
@@ -301,7 +272,7 @@ export default function LandingClient({ products }: { products: any[] }) {
                         <QuickAddButton variantId={node.variants?.edges?.[0]?.node?.id} />
                       </div>
                     </div>
-                    <h3 className="text-lg font-bold uppercase tracking-wide mb-2 line-clamp-1 group-hover:text-[#2563EB] transition-colors">
+                    <h3 className="text-lg font-bold uppercase tracking-wide mb-2 line-clamp-1 group-hover:text-aegean-blue transition-colors">
                       {node.title}
                     </h3>
                     <p className="text-gray-400 font-medium mt-auto">

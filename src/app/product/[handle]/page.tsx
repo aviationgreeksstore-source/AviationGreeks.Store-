@@ -132,13 +132,17 @@ export default async function ProductPage({ params }: { params: { handle: string
             </FadeIn>
 
             <FadeIn delay={0.4}>
-              <AddToCartButton variantId={variantId} />
+              <AddToCartButton 
+                variantId={variantId} 
+                productTitle={product.title} 
+                price={formattedPrice} 
+              />
             </FadeIn>
           </div>
           
         </div>
 
-        <ReviewWidget reviews={reviews} />
+        <ReviewWidget reviews={reviews} productId={product.id.split('/').pop()} />
 
         {/* Product Recommendations */}
         <ProductRecommendations productId={product.id} />

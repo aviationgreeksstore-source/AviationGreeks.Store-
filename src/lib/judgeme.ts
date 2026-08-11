@@ -56,3 +56,53 @@ export async function getProductReviews(identifier: { handle?: string; externalI
     return [];
   }
 }
+
+export interface SubmitReviewPayload {
+  name: string;
+  email: string;
+  rating: number;
+  title: string;
+  body: string;
+  id: string; // The Shopify Product ID
+}
+
+/**
+ * Submit a product review to Judge.me API.
+ */
+export async function submitProductReview(payload: SubmitReviewPayload) {
+  if (!shopDomain || !publicToken) {
+    throw new Error('Judge.me API tokens are missing.');
+  }
+
+  const url = new URL('https://judge.me/api/v1/reviews');
+  
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        shop_domain: shopDomain,
+        platform: 'shopify',
+        id: payload.id,
+        email: payload.email,
+        name: payload.name,
+        rating: payload.rating,
+        title: payload.title,
+        body: payload.body,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.message || `Judge.me API error: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to submit Judge.me review:', error);
+    throw error;
+  }
+}

@@ -2,15 +2,19 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { addItem, createCartAction, getCartAction, removeItem, updateItem } from './actions';
+type AcarsData = { title: string; quantity: number; price: string } | null;
+
 type CartContextType = {
   cart: any | null;
   isCartOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  addToCart: (merchandiseId: string, quantity: number) => Promise<void>;
+  addToCart: (merchandiseId: string, quantity: number, productInfo?: { title: string, price: string }) => Promise<void>;
   removeFromCart: (lineId: string) => Promise<void>;
   updateQuantity: (lineId: string, quantity: number) => Promise<void>;
   isLoading: boolean;
+  acarsData: AcarsData;
+  closeAcarsModal: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -19,6 +23,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<any | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [acarsData, setAcarsData] = useState<AcarsData>(null);
 
   useEffect(() => {
     async function initCart() {
@@ -45,8 +50,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
+  const closeAcarsModal = () => setAcarsData(null);
 
-  const addToCart = async (merchandiseId: string, quantity: number) => {
+  const addToCart = async (merchandiseId: string, quantity: number, productInfo?: { title: string, price: string }) => {
     try {
       setIsLoading(true);
       let cartId = localStorage.getItem('shopify_cart_id');
@@ -66,7 +72,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       
       setCart(result.cart);
-      openCart();
+      
+      if (productInfo) {
+        setAcarsData({
+          title: productInfo.title,
+          quantity,
+          price: productInfo.price
+        });
+      } else {
+        openCart();
+      }
     } catch (e) {
       console.error("Error adding to cart:", e);
       throw e;
@@ -109,7 +124,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <CartContext.Provider value={{ cart, isCartOpen, openCart, closeCart, addToCart, removeFromCart, updateQuantity, isLoading }}>
+    <CartContext.Provider value={{ cart, isCartOpen, openCart, closeCart, addToCart, removeFromCart, updateQuantity, isLoading, acarsData, closeAcarsModal }}>
       {children}
     </CartContext.Provider>
   );

@@ -1,5 +1,6 @@
 import { shopifyFetch } from '@/lib/shopify';
 import LandingClient from './LandingClient';
+import ShopByCategory from '@/components/layout/ShopByCategory';
 
 const getProductsQuery = `
   query getProducts {
@@ -74,7 +75,10 @@ export default async function Home() {
 
   return (
     <>
-      <LandingClient products={products} />
+      <LandingClient 
+        products={products} 
+        shopByCategory={<ShopByCategory />}
+      />
     </>
   );
 }
