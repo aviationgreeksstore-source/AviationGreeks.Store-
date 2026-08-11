@@ -2,6 +2,7 @@ import { shopifyFetch } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import AddToCartButton from '@/components/product/AddToCartButton';
+import ShakeToIdentRadar from '@/components/product/ShakeToIdentRadar';
 import ProductRecommendations from '@/components/product/ProductRecommendations';
 import FadeIn from '@/components/ui/FadeIn';
 import { ReviewWidget } from '@/components/product/ReviewWidget';
@@ -98,21 +99,23 @@ export default async function ProductPage({ params }: { params: { handle: string
           
           {/* Left Column: Image */}
           <div className="flex-1">
-            <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
-              {product.featuredImage?.url ? (
-                <Image 
-                  src={product.featuredImage.url} 
-                  alt={product.featuredImage.altText || product.title}
-                  fill
-                  priority 
-                  className="object-cover w-full h-full transition-transform duration-700 hover:scale-105"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-neutral-600">
-                  No Image Available
-                </div>
-              )}
-            </div>
+            <ShakeToIdentRadar>
+              <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
+                {product.featuredImage?.url ? (
+                  <Image 
+                    src={product.featuredImage.url} 
+                    alt={product.featuredImage.altText || product.title}
+                    fill
+                    priority 
+                    className="object-cover w-full h-full transition-transform duration-700 hover:scale-105"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-neutral-600">
+                    No Image Available
+                  </div>
+                )}
+              </div>
+            </ShakeToIdentRadar>
           </div>
 
           {/* Right Column: Details */}

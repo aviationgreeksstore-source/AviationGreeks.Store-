@@ -74,14 +74,14 @@ export default function TransponderDiscount() {
     <motion.button
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className={`rounded-md py-4 font-mono font-bold transition-colors shadow-lg ${className}`}
+      className={`rounded-md py-4 font-mono font-bold transition-colors shadow-lg select-none ${className}`}
     >
       {label}
     </motion.button>
   );
 
   return (
-    <div className="bg-zinc-950 border-2 border-zinc-800 rounded-lg shadow-2xl p-4 w-full max-w-sm mx-auto flex flex-col gap-5">
+    <div className="bg-zinc-950 border-2 border-zinc-800 rounded-lg shadow-2xl p-4 w-full max-w-sm mx-auto flex flex-col gap-5 select-none">
       <div className="flex items-center justify-between px-1">
         <span className="text-zinc-500 font-mono text-[10px] sm:text-xs uppercase tracking-widest">
           Transponder Mode-C
