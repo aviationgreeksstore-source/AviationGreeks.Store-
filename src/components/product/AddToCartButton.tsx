@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useCart } from '../cart/CartContext';
+import { useHaptic } from '../../hooks/useHaptic';
 
 export default function AddToCartButton({ 
   variantId,
@@ -13,10 +14,15 @@ export default function AddToCartButton({
   price?: string;
 }) {
   const { addToCart } = useCart();
+  const { triggerHaptic } = useHaptic();
   const [isAdding, setIsAdding] = useState(false);
 
   const handleAddToCart = async () => {
-    if (!variantId) return;
+    if (!variantId) {
+      triggerHaptic('warning');
+      return;
+    }
+    triggerHaptic('heavy');
     try {
       setIsAdding(true);
       await addToCart(variantId, 1, productTitle && price ? { title: productTitle, price } : undefined);

@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useCart } from './CartContext';
 import SwipeToCheckout from './SwipeToCheckout';
+import TransponderDiscount from '../checkout/TransponderDiscount';
 
 export default function SlideOutCart() {
   const { cart, isCartOpen, closeCart, removeFromCart, updateQuantity } = useCart();
@@ -105,8 +106,9 @@ export default function SlideOutCart() {
 
         {/* Footer with Checkout button */}
         {lines.length > 0 && (
-          <div className="p-6 border-t border-white/10 bg-[#050505]">
-            <div className="flex justify-between items-center mb-6">
+          <div className="p-6 border-t border-white/10 bg-[#050505] flex flex-col gap-6">
+            <TransponderDiscount />
+            <div className="flex justify-between items-center">
               <span className="text-gray-400">Subtotal</span>
               <span className="text-2xl font-bold text-white">{formattedSubtotal}</span>
             </div>
