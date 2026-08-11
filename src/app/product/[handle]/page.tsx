@@ -63,7 +63,7 @@ export default async function ProductPage({ params }: { params: { handle: string
   const { handle } = params;
 
   let product: Product | null = null;
-  let reviews = [];
+  let reviews: any[] = [];
   
   try {
     const { body } = await shopifyFetch<{ data: { product: Product | null } }>({
