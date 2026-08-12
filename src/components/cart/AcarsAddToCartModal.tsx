@@ -61,7 +61,7 @@ export default function AcarsAddToCartModal() {
             // Custom takeoff easing curve roughly simulated by spring or cubic-bezier
             // ease: [0.25, 0.1, 0.25, 1.0]
           }}
-          className="fixed bottom-6 right-6 md:right-24 z-50 w-full max-w-sm bg-black border border-white/20 shadow-2xl font-mono text-xs md:text-sm text-amber-500 uppercase tracking-wider flex flex-col"
+          className="fixed bottom-6 right-6 md:right-24 z-[150] w-full max-w-sm bg-black border border-white/20 shadow-2xl font-mono text-xs md:text-sm text-amber-500 uppercase tracking-wider flex flex-col"
         >
           {/* Header Bar */}
           <div className="flex items-center justify-between border-b border-white/20 bg-neutral-900/50 px-3 py-2">

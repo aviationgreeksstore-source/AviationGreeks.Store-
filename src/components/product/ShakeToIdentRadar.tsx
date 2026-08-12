@@ -84,7 +84,7 @@ export default function ShakeToIdentRadar({ children, discountCode }: ShakeToIde
   }
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full h-full" onDoubleClick={triggerIdent}>
       <div className="relative w-full h-full flex-1">
         {children}
 
@@ -169,7 +169,7 @@ export default function ShakeToIdentRadar({ children, discountCode }: ShakeToIde
             transition={{ duration: 2, repeat: Infinity }}
             className="font-mono text-[10px] text-white/40 tracking-widest text-center"
           >
-            [ TCAS STATUS: STBY // SHAKE TO IDENT ]
+            [ TCAS STATUS: STBY // SHAKE / DBL-CLICK TO IDENT ]
           </motion.div>
         </div>
       )}

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Printer, Share2, PlaneTakeoff, TriangleAlert, Activity } from 'lucide-react';
+import { Printer, Share2, PlaneTakeoff, TriangleAlert, Activity, CheckCircle2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export interface ReceiptItem {
@@ -48,7 +48,6 @@ export function BlackBoxReceipt({
         console.error('Error sharing:', err);
       }
     } else {
-      // Fallback copy to clipboard
       try {
         await navigator.clipboard.writeText(`AviationGreeks Order Secured! SQUAWK #${orderId} - ${window.location.href}`);
         alert('Telemetry link copied to clipboard!');
@@ -62,114 +61,135 @@ export function BlackBoxReceipt({
     router.push('/');
   };
 
-  if (!mounted) return null; // Avoid hydration mismatch
+  if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-black text-orange-500 font-mono p-4 sm:p-8 flex items-center justify-center selection:bg-orange-500 selection:text-black">
-      <div className="w-full max-w-4xl border-4 border-orange-500 relative bg-[#0a0a0a] shadow-[0_0_50px_rgba(255,85,0,0.15)] overflow-hidden">
+    <div className="min-h-screen bg-[#09090b] text-zinc-300 font-mono p-4 sm:p-8 flex items-center justify-center selection:bg-orange-500 selection:text-white">
+      {/* Outer Chassis */}
+      <div className="w-full max-w-4xl relative bg-[#121214] rounded-xl shadow-2xl overflow-hidden border border-zinc-800/80 ring-1 ring-white/5">
         
-        {/* Physical Chassis / Warning Label Header */}
-        <div className="border-b-4 border-orange-500 p-4 bg-orange-500/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
-          <div>
-            <h1 className="text-xl md:text-3xl font-black uppercase tracking-[0.2em] text-orange-500 flex items-center gap-3">
-              <Activity className="animate-pulse w-6 h-6 md:w-8 md:h-8" />
-              FLIGHT DATA RECORDER
-            </h1>
-            <p className="text-sm opacity-80 uppercase tracking-widest mt-1">MODEL FDR-2026 // POST-PURCHASE TELEMETRY</p>
+        {/* Top Accent Bar */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600"></div>
+
+        {/* Header Section */}
+        <div className="p-6 md:p-8 border-b border-zinc-800/60 bg-[#151518] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative">
+          
+          <div className="flex items-center gap-5">
+            <div className="w-12 h-12 rounded-lg bg-black/40 flex items-center justify-center border border-zinc-700/50 shadow-inner">
+               <Activity className="text-orange-500 animate-pulse w-6 h-6" />
+            </div>
+            <div>
+              <h1 className="text-xl md:text-2xl font-bold tracking-[0.15em] text-zinc-100">
+                FLIGHT DATA RECORDER
+              </h1>
+              <div className="flex items-center gap-3 mt-1">
+                <span className="text-[10px] sm:text-xs text-zinc-500 uppercase tracking-widest font-semibold">MODEL FDR-2026</span>
+                <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
+                <span className="text-[10px] sm:text-xs text-orange-500/80 uppercase tracking-widest font-semibold">POST-PURCHASE TELEMETRY</span>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2 border-2 border-orange-500 px-4 py-2 bg-black text-orange-500 text-xs md:text-sm font-bold uppercase tracking-widest">
-            <TriangleAlert className="animate-pulse text-red-500 w-5 h-5" />
-            <span className="text-red-500">DO NOT OPEN - PROPERTY OF AVIATIONGREEKS OPS</span>
+          
+          <div className="flex items-center gap-3 bg-black/40 px-4 py-2.5 rounded-lg border border-zinc-800/60 shadow-inner">
+            <TriangleAlert className="text-orange-500/80 w-4 h-4" />
+            <span className="text-zinc-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest">PROPERTY OF AVIATIONGREEKS</span>
           </div>
         </div>
 
-        {/* Telemetry Visual Stream */}
-        <div className="h-20 border-b-4 border-orange-500 bg-black overflow-hidden flex items-end opacity-80 relative z-0">
+        {/* Telemetry Visual Stream - More sophisticated */}
+        <div className="h-24 bg-black/40 border-b border-zinc-800/60 relative overflow-hidden flex items-center">
+          {/* Subtle Grid Background */}
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+          
           {/* Simulated waveform using pure SVG */}
-          <svg className="w-full h-full stroke-orange-500 opacity-60" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 100">
+          <svg className="w-full h-full stroke-orange-500/80 opacity-80 mix-blend-screen" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 100">
             <path d="M0,50 L50,50 L60,20 L70,80 L80,50 L200,50 L210,10 L220,90 L230,50 L400,50 L410,30 L420,70 L430,50 L600,50 L610,20 L620,80 L630,50 L800,50 L810,10 L820,90 L830,50 L1000,50" 
-                  strokeWidth="2" 
-                  className="animate-[pulse_1.5s_ease-in-out_infinite]" />
-            <path d="M0,80 Q150,40 300,80 T600,80 T900,40 T1000,80" 
-                  strokeWidth="1" 
-                  opacity="0.3" 
-                  className="animate-pulse" />
+                  strokeWidth="1.5" 
+                  className="animate-[pulse_2s_ease-in-out_infinite] drop-shadow-[0_0_6px_rgba(249,115,22,0.4)]" />
+            <path d="M0,75 L1000,75" stroke="rgba(249,115,22,0.15)" strokeWidth="1" strokeDasharray="4 4" />
+            <path d="M0,25 L1000,25" stroke="rgba(249,115,22,0.15)" strokeWidth="1" strokeDasharray="4 4" />
           </svg>
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#121214] to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#121214] to-transparent z-10" />
         </div>
 
         {/* Receipt Content Body */}
-        <div className="p-6 md:p-10 space-y-10 relative z-10">
+        <div className="p-6 md:p-10 relative">
           
           {/* Status Readout */}
-          <div className="bg-orange-500/10 border border-orange-500/50 p-5 shadow-[inset_0_0_20px_rgba(255,85,0,0.1)]">
-            <p className="uppercase tracking-widest text-lg md:text-xl font-bold flex items-center gap-3">
-              <span className="text-2xl animate-pulse">{'>'}</span> 
+          <div className="flex items-center gap-4 bg-orange-500/5 border border-orange-500/20 rounded-lg p-4 mb-10 shadow-inner">
+            <div className="h-2 w-2 rounded-full bg-orange-500 animate-pulse shadow-[0_0_8px_rgba(249,115,22,0.8)]"></div>
+            <p className="uppercase tracking-[0.1em] text-sm text-orange-400 font-medium">
               DATALINK SECURED. CARGO MANIFEST LOGGED. PREPARING FOR DEPARTURE.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-black/50 p-6 border border-orange-500/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {/* Identity & Mission Data */}
             <div className="space-y-6">
               <div>
-                <p className="text-xs opacity-60 uppercase tracking-widest mb-1">SQUAWK / ORDER ID</p>
-                <p className="text-3xl font-black tracking-widest text-white">#{orderId}</p>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1.5 font-semibold">SQUAWK / ORDER ID</p>
+                <p className="text-2xl font-medium tracking-wider text-zinc-100">#{orderId}</p>
               </div>
               <div>
-                <p className="text-xs opacity-60 uppercase tracking-widest mb-1">COMMANDER</p>
-                <p className="text-xl tracking-widest uppercase">{customerName}</p>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1.5 font-semibold">COMMANDER</p>
+                <p className="text-lg tracking-wider uppercase text-zinc-300">{customerName}</p>
               </div>
               <div>
-                <p className="text-xs opacity-60 uppercase tracking-widest mb-1">TRANSMISSION TIME (UTC)</p>
-                <p className="text-lg tracking-widest uppercase">{new Date().toISOString().replace('T', ' ').slice(0, 19)}Z</p>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1.5 font-semibold">TRANSMISSION TIME (UTC)</p>
+                <p className="text-sm tracking-wider uppercase text-zinc-400">{new Date().toISOString().replace('T', ' ').slice(0, 19)}Z</p>
               </div>
             </div>
             
             {/* Mission Totals */}
             <div className="space-y-6 md:text-right flex flex-col md:items-end">
               <div>
-                <p className="text-xs opacity-60 uppercase tracking-widest mb-1">TOTAL CARGO VALUE</p>
-                <p className="text-4xl font-black tracking-widest text-white">${total.toFixed(2)}</p>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1.5 font-semibold">TOTAL CARGO VALUE</p>
+                <p className="text-4xl font-medium tracking-wider text-zinc-100">${total.toFixed(2)}</p>
               </div>
-              <div className="bg-green-500/10 border border-green-500 px-4 py-2 inline-block">
-                <p className="text-xs text-green-500 opacity-80 uppercase tracking-widest mb-1">SYSTEM STATUS</p>
-                <p className="text-xl tracking-widest uppercase text-green-400 font-bold flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                  CLEARED FOR TAKEOFF
-                </p>
+              <div className="bg-black/30 border border-zinc-800/60 rounded-lg px-5 py-3.5 min-w-[220px]">
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 font-semibold">SYSTEM STATUS</p>
+                <div className="flex items-center md:justify-end gap-2 text-emerald-400">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <p className="text-sm tracking-widest uppercase font-semibold">
+                    CLEARED FOR TAKEOFF
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Payload Manifest (Items) */}
-          <div className="mt-8 relative">
-            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-orange-500/30"></div>
-            <h2 className="text-2xl font-black uppercase tracking-[0.15em] border-b-2 border-orange-500 pb-3 mb-6 flex items-center gap-3">
-              [ PAYLOAD MANIFEST ]
-            </h2>
-            <div className="overflow-x-auto">
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+               <h2 className="text-xs font-semibold text-zinc-400 uppercase tracking-[0.2em]">
+                 PAYLOAD MANIFEST
+               </h2>
+               <div className="flex-1 h-px bg-zinc-800/60"></div>
+            </div>
+            
+            <div className="overflow-x-auto rounded-lg border border-zinc-800/60 bg-black/20">
               <table className="w-full text-left border-collapse min-w-[600px]">
                 <thead>
-                  <tr className="border-b-2 border-orange-500 text-sm opacity-80">
-                    <th className="py-3 px-4 font-bold uppercase tracking-widest w-1/2">ITEM DESIGNATION</th>
-                    <th className="py-3 px-4 font-bold text-center uppercase tracking-widest">QTY</th>
-                    <th className="py-3 px-4 font-bold uppercase tracking-widest">NOTES (WT/DIM)</th>
-                    <th className="py-3 px-4 font-bold text-right uppercase tracking-widest">VALUE</th>
+                  <tr className="text-[10px] text-zinc-500 border-b border-zinc-800/60 bg-black/40">
+                    <th className="py-3.5 px-5 font-semibold uppercase tracking-widest w-1/2">ITEM DESIGNATION</th>
+                    <th className="py-3.5 px-5 font-semibold text-center uppercase tracking-widest">QTY</th>
+                    <th className="py-3.5 px-5 font-semibold uppercase tracking-widest">NOTES</th>
+                    <th className="py-3.5 px-5 font-semibold text-right uppercase tracking-widest">VALUE</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-orange-500/20">
+                <tbody className="divide-y divide-zinc-800/50">
                   {items.map((item, i) => (
-                    <tr key={item.id} className="hover:bg-orange-500/5 transition-colors group">
-                      <td className="py-5 px-4 font-bold uppercase tracking-wide text-white group-hover:text-orange-400 transition-colors">
+                    <tr key={item.id} className="hover:bg-zinc-800/20 transition-colors group">
+                      <td className="py-4 px-5 font-medium uppercase tracking-wide text-zinc-300">
                         <div className="flex items-center gap-3">
-                          <span className="text-xs opacity-50 font-normal">{(i + 1).toString().padStart(2, '0')}</span>
+                          <span className="text-[10px] text-zinc-600 font-normal">{(i + 1).toString().padStart(2, '0')}</span>
                           {item.title}
                         </div>
                       </td>
-                      <td className="py-5 px-4 text-center text-lg font-bold">x{item.quantity}</td>
-                      <td className="py-5 px-4 text-sm opacity-70 uppercase tracking-wider">{item.notes || 'STANDARD'}</td>
-                      <td className="py-5 px-4 text-right font-bold text-white">${(item.price * item.quantity).toFixed(2)}</td>
+                      <td className="py-4 px-5 text-center text-zinc-400">x{item.quantity}</td>
+                      <td className="py-4 px-5 text-xs text-zinc-500 uppercase tracking-wider">{item.notes || '--'}</td>
+                      <td className="py-4 px-5 text-right font-medium text-zinc-300">${(item.price * item.quantity).toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -180,85 +200,53 @@ export function BlackBoxReceipt({
         </div>
 
         {/* Action Terminals */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 border-t-4 border-orange-500 divide-y sm:divide-y-0 sm:divide-x-4 divide-orange-500 text-center relative z-10 print:hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-zinc-800/80 divide-y sm:divide-y-0 sm:divide-x divide-zinc-800/80 bg-[#0e0e10] print:hidden">
           
           <button 
             onClick={handlePrint}
-            className="group flex flex-col items-center justify-center p-8 bg-black hover:bg-orange-500 hover:text-black transition-all duration-300 relative overflow-hidden"
+            className="group flex flex-col items-center justify-center p-6 hover:bg-zinc-800/30 transition-colors"
           >
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iI2ZmNTUwMCIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] opacity-50 group-hover:opacity-0 transition-opacity"></div>
-            <Printer className="mb-3 w-8 h-8 group-hover:animate-bounce relative z-10" />
-            <span className="uppercase tracking-[0.2em] font-bold text-sm relative z-10">PRINT FLIGHT LOG</span>
+            <Printer className="mb-2.5 w-5 h-5 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
+            <span className="uppercase tracking-[0.15em] font-semibold text-[10px] text-zinc-500 group-hover:text-zinc-300 transition-colors">PRINT FLIGHT LOG</span>
           </button>
           
           <button 
             onClick={handleShare}
-            className="group flex flex-col items-center justify-center p-8 bg-black hover:bg-orange-500 hover:text-black transition-all duration-300 relative overflow-hidden"
+            className="group flex flex-col items-center justify-center p-6 hover:bg-zinc-800/30 transition-colors"
           >
-             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iI2ZmNTUwMCIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] opacity-50 group-hover:opacity-0 transition-opacity"></div>
-            <Share2 className="mb-3 w-8 h-8 group-hover:scale-125 transition-transform relative z-10" />
-            <span className="uppercase tracking-[0.2em] font-bold text-sm relative z-10">SHARE TELEMETRY</span>
+            <Share2 className="mb-2.5 w-5 h-5 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
+            <span className="uppercase tracking-[0.15em] font-semibold text-[10px] text-zinc-500 group-hover:text-zinc-300 transition-colors">SHARE TELEMETRY</span>
           </button>
           
           <button 
             onClick={handleReturn}
-            className="group flex flex-col items-center justify-center p-8 bg-black hover:bg-orange-500 hover:text-black transition-all duration-300 relative overflow-hidden"
+            className="group flex flex-col items-center justify-center p-6 hover:bg-zinc-800/30 transition-colors"
           >
-             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iI2ZmNTUwMCIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] opacity-50 group-hover:opacity-0 transition-opacity"></div>
-            <PlaneTakeoff className="mb-3 w-8 h-8 group-hover:-translate-y-2 group-hover:translate-x-2 transition-transform relative z-10" />
-            <span className="uppercase tracking-[0.2em] font-bold text-sm relative z-10">RETURN TO HANGAR</span>
+            <PlaneTakeoff className="mb-2.5 w-5 h-5 text-zinc-500 group-hover:text-orange-500 transition-colors" />
+            <span className="uppercase tracking-[0.15em] font-semibold text-[10px] text-zinc-500 group-hover:text-orange-400 transition-colors">RETURN TO HANGAR</span>
           </button>
 
         </div>
       </div>
       
-      {/* Print-specific styles using standard global style tag */}
+      {/* Print-specific styles */}
       <style dangerouslySetInnerHTML={{ __html: `
         @media print {
-          body {
-            background-color: white !important;
-          }
-          body * {
-            visibility: hidden;
-          }
-          .w-full.max-w-4xl, .w-full.max-w-4xl * {
-            visibility: visible;
-          }
+          body { background-color: white !important; }
+          body * { visibility: hidden; }
+          .w-full.max-w-4xl, .w-full.max-w-4xl * { visibility: visible; }
           .w-full.max-w-4xl {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100% !important;
-            max-width: 100% !important;
-            border: none !important;
-            box-shadow: none !important;
-            color: black !important;
-            background-color: white !important;
+            position: absolute; left: 0; top: 0; width: 100% !important; max-width: 100% !important;
+            border: none !important; box-shadow: none !important; color: black !important; background-color: white !important;
           }
-          /* Override all colors for print to save ink but keep the structure */
-          .text-orange-500, .border-orange-500, .border-orange-500\\/50, .border-orange-500\\/30, .border-orange-500\\/20, .border-orange-500\\/10 {
-            color: black !important;
-            border-color: black !important;
-          }
-          .text-red-500 {
-            color: black !important;
-          }
-          .text-green-500, .text-green-400, .border-green-500 {
-            color: black !important;
-            border-color: black !important;
-          }
-          .bg-orange-500\\/10, .bg-orange-500\\/5, .bg-black\\/50, .bg-\\[\\#0a0a0a\\], .bg-green-500\\/10, .bg-green-400, .bg-black {
-            background-color: white !important;
-          }
-          .text-white {
-            color: black !important;
-          }
-          .animate-pulse, .animate-\\[pulse_1\\.5s_ease-in-out_infinite\\] {
-            animation: none !important;
-          }
-          .stroke-orange-500 {
-            stroke: black !important;
-          }
+          .text-zinc-100, .text-zinc-300, .text-zinc-400, .text-zinc-500, .text-zinc-600 { color: black !important; }
+          .border-zinc-800\\/80, .border-zinc-800\\/60, .border-zinc-800\\/50, .border-zinc-700\\/50 { border-color: #ddd !important; }
+          .bg-\\[\\#121214\\], .bg-\\[\\#151518\\], .bg-\\[\\#09090b\\], .bg-black\\/40, .bg-black\\/30, .bg-black\\/20, .bg-orange-500\\/5 { background-color: white !important; }
+          .text-orange-500, .text-orange-400, .text-orange-500\\/80 { color: #333 !important; }
+          .text-emerald-400 { color: #333 !important; }
+          .animate-pulse, .animate-\\[pulse_2s_ease-in-out_infinite\\] { animation: none !important; }
+          .stroke-orange-500\\/80 { stroke: black !important; }
+          .from-orange-600, .via-orange-500, .to-orange-600 { background: black !important; }
         }
       `}} />
     </div>
