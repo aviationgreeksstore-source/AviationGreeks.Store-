@@ -25,7 +25,7 @@ export default async function LiveMetar() {
         </span>
         
         {/* METAR Text */}
-        <span className="font-mono text-[10px] md:text-xs text-white/60 uppercase tracking-widest truncate max-w-[200px] lg:max-w-[400px]">
+        <span className="font-mono font-bold text-[10px] md:text-xs text-emerald-400 uppercase tracking-widest truncate max-w-[200px] lg:max-w-[400px]">
           {metarData.trim()}
         </span>
       </div>
