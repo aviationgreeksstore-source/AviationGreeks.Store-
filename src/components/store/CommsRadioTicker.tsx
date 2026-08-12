@@ -8,7 +8,7 @@ const radioMessages = [
   "[ FREQ ACTIVE ]",
   "[ 412 PILOTS ON DATALINK ]",
   "[ NEW DROP ANNOUNCED IN #COMMS ]",
-  "[ HELLENIC AVIATION HUB ONLINE ]",
+  "[ AVIATION GREEKS ELITE LOUNGE ONLINE ]",
 ];
 
 export default function CommsRadioTicker({ discordUrl = "https://discord.gg/your-invite" }: { discordUrl?: string }) {

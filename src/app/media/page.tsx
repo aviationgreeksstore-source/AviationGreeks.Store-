@@ -1,5 +1,7 @@
 import FadeIn from '@/components/ui/FadeIn';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import FlightLogsFeed from '@/components/media/FlightLogsFeed';
 
 export const metadata: Metadata = {
   title: 'Media | AviationGreeks',
@@ -51,30 +53,9 @@ export default function MediaPage() {
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {[...Array(6)].map((_, idx) => (
-              <FadeIn key={idx} delay={0.1 * (idx + 1)}>
-                <div className="group cursor-pointer">
-                  <div className="relative w-full aspect-video bg-[#0a0a0a] rounded-xl overflow-hidden border border-[#333333] group-hover:border-[#2563EB] transition-colors duration-300">
-                    {/* Placeholder Thumbnail */}
-                    <div className="absolute inset-0 bg-[#111111] group-hover:bg-[#1a1a1a] transition-colors duration-300 flex items-center justify-center">
-                      <svg className="w-10 h-10 text-[#333333] group-hover:text-[#2563EB] transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="mt-4 space-y-1">
-                    <h3 className="text-lg font-bold uppercase tracking-wide group-hover:text-[#2563EB] transition-colors line-clamp-2">
-                      Flight Log {idx + 1}: Airborne over the Aegean
-                    </h3>
-                    <p className="text-sm font-medium text-gray-500">
-                      AviationGreeks • {12 + idx}K views • {idx + 1} weeks ago
-                    </p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <Suspense fallback={<div className="animate-pulse h-64 bg-[#0a0a0a] rounded-xl border border-[#333333]"></div>}>
+            <FlightLogsFeed />
+          </Suspense>
         </section>
 
       </div>
