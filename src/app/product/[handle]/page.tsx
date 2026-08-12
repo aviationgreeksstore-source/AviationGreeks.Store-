@@ -15,6 +15,9 @@ const getProductQuery = `
       title
       handle
       descriptionHtml
+      shakeDiscount: metafield(namespace: "custom", key: "shake_discount_code") {
+        value
+      }
       featuredImage {
         url
         altText
@@ -41,6 +44,9 @@ type Product = {
   title: string;
   handle: string;
   descriptionHtml: string;
+  shakeDiscount?: {
+    value: string;
+  } | null;
   featuredImage?: {
     url: string;
     altText: string;
@@ -99,7 +105,7 @@ export default async function ProductPage({ params }: { params: { handle: string
           
           {/* Left Column: Image */}
           <div className="flex-1">
-            <ShakeToIdentRadar>
+            <ShakeToIdentRadar discountCode={product.shakeDiscount?.value}>
               <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
                 {product.featuredImage?.url ? (
                   <Image 

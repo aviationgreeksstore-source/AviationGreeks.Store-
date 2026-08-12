@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface ShakeToIdentRadarProps {
   children: React.ReactNode;
+  discountCode?: string | null;
 }
 
-export default function ShakeToIdentRadar({ children }: ShakeToIdentRadarProps) {
+export default function ShakeToIdentRadar({ children, discountCode }: ShakeToIdentRadarProps) {
   const [isSupported, setIsSupported] = useState(false);
   const [isTriggered, setIsTriggered] = useState(false);
   const [showCode, setShowCode] = useState(false);
@@ -27,7 +28,7 @@ export default function ShakeToIdentRadar({ children }: ShakeToIdentRadarProps) 
   }, []);
 
   useEffect(() => {
-    if (!isSupported || isTriggered) return;
+    if (!isSupported || isTriggered || !discountCode) return;
 
     const handleMotion = (event: DeviceMotionEvent) => {
       const { accelerationIncludingGravity } = event;
@@ -77,6 +78,10 @@ export default function ShakeToIdentRadar({ children }: ShakeToIdentRadarProps) 
       setShowCode(false);
     }, 5000);
   };
+
+  if (!discountCode) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -144,7 +149,7 @@ export default function ShakeToIdentRadar({ children }: ShakeToIdentRadarProps) 
                       className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full backdrop-blur-[2px]"
                     >
                       <span className="font-mono text-2xl sm:text-3xl font-bold text-white tracking-widest drop-shadow-[0_0_12px_rgba(255,255,255,1)]">
-                        [ IDENT: SQ777 ]
+                        [ IDENT: {discountCode} ]
                       </span>
                     </motion.div>
                   )}
