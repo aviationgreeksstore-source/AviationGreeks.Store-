@@ -8,6 +8,7 @@ import Image from "next/image";
 import NewsletterForm from "@/components/newsletter/NewsletterForm";
 import QuickAddButton from "@/components/cart/QuickAddButton";
 import { takeoffVariant, hudRevealVariant, approachStaggerContainer } from "@/lib/animations";
+import CinematicHero from "@/components/hero/CinematicHero";
 
 export default function LandingClient({ products, shopByCategory }: { products: any[], shopByCategory?: React.ReactNode }) {
   // Map local variants to the new global aviation variants
@@ -16,106 +17,7 @@ export default function LandingClient({ products, shopByCategory }: { products: 
 
   return (
     <div className="bg-[#000000] text-[#FFFFFF] selection:bg-aegean-blue selection:text-white">
-      {/* Hero Section */}
-      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden border-b border-[#333333]">
-        {/* Background Image */}
-        <Image
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
-          src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=2000&auto=format&fit=crop"
-          alt="Aviation background"
-          fill
-          priority
-        />
-
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/60 z-10" />
-
-        <motion.div
-          className="relative z-20 text-center max-w-4xl px-4 flex flex-col items-center"
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-        >
-          <motion.h1
-            variants={fadeIn}
-            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-white"
-          >
-            Gear for people <br />
-            who actually <br />
-            <span className="text-aegean-blue">
-              fly.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            variants={fadeIn}
-            className="text-lg md:text-xl lg:text-2xl text-gray-300 font-medium tracking-wide max-w-2xl mx-auto"
-          >
-            Premium gear designed for the modern aviator.
-            <br className="hidden md:block" /> Engineered for the flight deck, built for the tarmac.
-          </motion.p>
-
-          <motion.div
-            variants={fadeIn}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-8"
-          >
-            <Link href="/collections">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-aegean-blue text-white text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]"
-              >
-                Shop the Fleet
-              </motion.button>
-            </Link>
-            <Link href="/media">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-transparent border-2 border-white text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors rounded-sm"
-              >
-                Watch Our Channel
-              </motion.button>
-            </Link>
-          </motion.div>
-
-          {/* Runway Approach Lighting (Rabbit Strobe) */}
-          <motion.div
-            variants={fadeIn}
-            className="flex items-center justify-center space-x-4 mt-12 mb-2"
-          >
-            {[...Array(5)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0.1 }}
-                animate={{ opacity: [0.1, 1, 0.1] }}
-                transition={{
-                  duration: 1.2,
-                  repeat: Infinity,
-                  delay: i * 0.15,
-                  ease: "linear"
-                }}
-                className="w-1.5 h-1.5 rounded-full bg-flight-amber shadow-[0_0_12px_rgba(255,191,0,0.9)]"
-              />
-            ))}
-          </motion.div>
-
-          {/* Social Proof */}
-          <motion.div
-            variants={fadeIn}
-            className="mt-12 flex flex-col items-center space-y-2"
-          >
-            <div className="flex items-center space-x-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 text-aegean-blue fill-aegean-blue" />
-              ))}
-            </div>
-            <p className="text-sm font-bold uppercase tracking-widest text-gray-300">
-              Trusted by 10,000+ Pilots Worldwide
-            </p>
-          </motion.div>
-        </motion.div>
-      </section>
+      <CinematicHero />
 
       {/* Benefit Bar (Risk Reversal) */}
       <section className="border-b border-[#333333] bg-[#0A0A0A]">

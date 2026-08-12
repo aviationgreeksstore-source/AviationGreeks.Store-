@@ -108,15 +108,13 @@ export default async function ProductPage({ params }: { params: { handle: string
             <ShakeToIdentRadar discountCode={product.shakeDiscount?.value}>
               <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
                 {product.featuredImage?.url ? (
-                  <SpottersLensViewer zoomScale={2.5}>
-                    <Image 
-                      src={product.featuredImage.url} 
-                      alt={product.featuredImage.altText || product.title}
-                      fill
-                      priority 
-                      className="object-cover w-full h-full pointer-events-none"
-                    />
-                  </SpottersLensViewer>
+                  <Image 
+                    src={product.featuredImage.url} 
+                    alt={product.featuredImage.altText || product.title}
+                    fill
+                    priority 
+                    className="object-cover w-full h-full pointer-events-none"
+                  />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-neutral-600">
                     No Image Available

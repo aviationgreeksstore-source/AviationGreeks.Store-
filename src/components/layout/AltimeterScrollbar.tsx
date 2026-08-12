@@ -16,7 +16,8 @@ export default function AltimeterScrollbar() {
 
   useEffect(() => {
     return altitude.on("change", (latest) => {
-      const alt = Math.max(0, Math.round(latest));
+      let alt = Math.max(0, Math.round(latest));
+      if (alt < 50) alt = 0; // Snap to 0 to account for browser scroll rendering quirks
       setAltitudeStr(alt.toString().padStart(5, "0"));
       setIsLanded(alt === 0);
     });
