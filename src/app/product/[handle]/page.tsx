@@ -2,7 +2,6 @@ import { shopifyFetch } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import AddToCartButton from '@/components/product/AddToCartButton';
-import SpottersLensViewer from '@/components/product/SpottersLensViewer';
 import ShakeToIdentRadar from '@/components/product/ShakeToIdentRadar';
 import ProductRecommendations from '@/components/product/ProductRecommendations';
 import FadeIn from '@/components/ui/FadeIn';

@@ -80,7 +80,7 @@ export default function SpottersLensViewer({ children, zoomScale = 2 }: Spotters
           transformOrigin: `${mousePosition.x}% ${mousePosition.y}%`,
         }}
         transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-        className="w-full h-full will-change-transform flex items-center justify-center"
+        className="relative w-full h-full will-change-transform flex items-center justify-center"
       >
         {children}
       </motion.div>

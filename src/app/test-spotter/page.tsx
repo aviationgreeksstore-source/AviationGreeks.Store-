@@ -4,7 +4,7 @@ export default function TestSpotterPage() {
   return (
     <div className="min-h-screen bg-[#09090b] flex flex-col items-center justify-center p-8 gap-8 text-white">
       <div className="text-center max-w-xl">
-        <h1 className="text-3xl font-bold mb-4 uppercase tracking-wider font-mono">Spotter's Lens Preview</h1>
+        <h1 className="text-3xl font-bold mb-4 uppercase tracking-wider font-mono">Spotter&apos;s Lens Preview</h1>
         <p className="text-neutral-400">
           Desktop: Hover your mouse over the image to activate and pan.<br/>
           Mobile: Tap and hold the image to activate the viewfinder.
