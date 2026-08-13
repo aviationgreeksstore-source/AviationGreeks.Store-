@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlackBoxReceipt } from '@/components/checkout/BlackBoxReceipt';
+import { BoardingPassReceipt } from '@/components/checkout/BoardingPassReceipt';
 
 // Mock data for demonstration - in a real app you'd fetch this using the search params 
 // (e.g. ?order_id=xxx) or retrieve it from your state management / database.
@@ -39,11 +39,24 @@ export default function CheckoutSuccessPage({
   const mockTotal = mockItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   return (
-    <BlackBoxReceipt 
-      orderId={orderId} 
-      items={mockItems} 
-      customerName="GUEST COMMANDER" 
-      total={mockTotal} 
-    />
+    <div className="min-h-screen bg-zinc-950 py-12 md:py-24 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto mb-12 text-center">
+        <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
+          MISSION ACCOMPLISHED
+        </h1>
+        <p className="text-white/60 text-lg md:text-xl tracking-wide max-w-2xl mx-auto">
+          Your gear is confirmed and ready for dispatch. Here is your First-Class Boarding Pass Manifest. 
+          Save it to your device and share it to your story to let everyone know you&apos;re flying heavy.
+        </p>
+      </div>
+
+      <BoardingPassReceipt 
+        orderId={orderId} 
+        items={mockItems} 
+        customerName="JOHN DOE" 
+        total={mockTotal} 
+        destination="LHR - London, UK"
+      />
+    </div>
   );
 }

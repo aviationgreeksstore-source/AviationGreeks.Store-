@@ -9,7 +9,6 @@ import NewsletterForm from "@/components/newsletter/NewsletterForm";
 import QuickAddButton from "@/components/cart/QuickAddButton";
 import { takeoffVariant, hudRevealVariant, approachStaggerContainer } from "@/lib/animations";
 import CinematicHero from "@/components/hero/CinematicHero";
-
 export default function LandingClient({ products, shopByCategory }: { products: any[], shopByCategory?: React.ReactNode }) {
   // Map local variants to the new global aviation variants
   const fadeIn = hudRevealVariant;

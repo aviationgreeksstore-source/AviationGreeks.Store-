@@ -3,6 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { useCart } from './CartContext';
+import PriorityLogisticsBar from './PriorityLogisticsBar';
+import SmartPayloadUpsell from './SmartPayloadUpsell';
 
 export default function SlideOutCart() {
   const { cart, isCartOpen, closeCart, removeFromCart, updateQuantity } = useCart();
@@ -41,6 +43,8 @@ export default function SlideOutCart() {
             </svg>
           </button>
         </div>
+
+        <PriorityLogisticsBar />
 
         {/* Cart Items */}
         <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
@@ -101,6 +105,8 @@ export default function SlideOutCart() {
             })
           )}
         </div>
+
+        <SmartPayloadUpsell />
 
         {/* Footer with Checkout button */}
         {lines.length > 0 && (

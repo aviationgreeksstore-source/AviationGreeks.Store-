@@ -29,25 +29,25 @@ export default function CommunityPage() {
               title: "YouTube",
               desc: "Watch 4K plane spotting, reviews, and detailed showcases.",
               href: "https://youtube.com/@AviationGreeks",
-              stat: "40K+ Subs",
+              stat: "60K+ Subs",
             },
             {
               title: "Instagram",
               desc: "Daily aviation photography and behind-the-scenes.",
               href: "https://instagram.com/aviationgreeks",
-              stat: "120K+ Followers",
+              stat: "5.2K+ Followers",
             },
             {
               title: "X (Twitter)",
               desc: "Real-time aviation news and community discussions.",
               href: "https://x.com/aviationgreeks",
-              stat: "15K+ Followers",
+              stat: "Join Discussion",
             },
             {
               title: "Discord",
               desc: "Our official hub. Chat with the crew and talk aviation.",
               href: "https://discord.gg/aviationgreeks",
-              stat: "5K+ Active Pilots",
+              stat: "Join Server",
             }
           ].map((social, idx) => (
             <a

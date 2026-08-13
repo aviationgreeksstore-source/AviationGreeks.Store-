@@ -7,11 +7,13 @@ import { useHaptic } from '../../hooks/useHaptic';
 export default function AddToCartButton({ 
   variantId,
   productTitle,
-  price
+  price,
+  onMissingVariant
 }: { 
   variantId: string | undefined;
   productTitle?: string;
   price?: string;
+  onMissingVariant?: () => void;
 }) {
   const { addToCart } = useCart();
   const { triggerHaptic } = useHaptic();
@@ -20,6 +22,7 @@ export default function AddToCartButton({
   const handleAddToCart = async () => {
     if (!variantId) {
       triggerHaptic('warning');
+      if (onMissingVariant) onMissingVariant();
       return;
     }
     triggerHaptic('heavy');
@@ -36,8 +39,8 @@ export default function AddToCartButton({
   return (
     <button 
       onClick={handleAddToCart}
-      disabled={!variantId || isAdding}
-      className="w-full md:w-auto px-12 py-5 bg-aviation-blue text-white font-bold uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+      disabled={isAdding}
+      className={`w-full md:w-auto px-12 py-5 bg-aviation-blue text-white font-bold uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm flex items-center justify-center space-x-3 ${isAdding ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
       <span>{isAdding ? 'Adding...' : 'Add to Cart'}</span>
       {!isAdding && (

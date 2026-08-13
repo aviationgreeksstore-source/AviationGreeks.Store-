@@ -321,6 +321,13 @@ const getProductRecommendationsQuery = `
           currencyCode
         }
       }
+      variants(first: 1) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
     }
   }
 `;

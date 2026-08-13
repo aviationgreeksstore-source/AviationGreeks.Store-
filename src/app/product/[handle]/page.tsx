@@ -1,7 +1,7 @@
 import { shopifyFetch } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import AddToCartButton from '@/components/product/AddToCartButton';
+import ProductForm from '@/components/product/ProductForm';
 import ShakeToIdentRadar from '@/components/product/ShakeToIdentRadar';
 import ProductRecommendations from '@/components/product/ProductRecommendations';
 import FadeIn from '@/components/ui/FadeIn';
@@ -28,10 +28,20 @@ const getProductQuery = `
           currencyCode
         }
       }
-      variants(first: 1) {
+      options {
+        name
+        values
+      }
+      variants(first: 250) {
         edges {
           node {
             id
+            title
+            availableForSale
+            selectedOptions {
+              name
+              value
+            }
           }
         }
       }
@@ -57,10 +67,20 @@ type Product = {
       currencyCode: string;
     };
   };
+  options: {
+    name: string;
+    values: string[];
+  }[];
   variants: {
     edges: Array<{
       node: {
         id: string;
+        title: string;
+        availableForSale: boolean;
+        selectedOptions: {
+          name: string;
+          value: string;
+        }[];
       };
     }>;
   };
@@ -91,12 +111,16 @@ export default async function ProductPage({ params }: { params: { handle: string
     return notFound();
   }
 
-  const variantId = product.variants?.edges?.[0]?.node?.id;
   const priceAmount = parseFloat(product.priceRange.minVariantPrice.amount || '0');
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: product.priceRange.minVariantPrice.currencyCode || 'USD',
   }).format(priceAmount);
+
+  const variants = product.variants.edges.map((edge) => edge.node);
+  // Filter out the default "Title" option if there are no actual variants configured, 
+  // but Shopify usually returns a single "Default Title" variant if no options exist.
+  const options = product.options.filter((opt) => opt.name !== 'Title' && opt.values.length > 0 && opt.values[0] !== 'Default Title');
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-gray-800">
@@ -141,8 +165,9 @@ export default async function ProductPage({ params }: { params: { handle: string
             </FadeIn>
 
             <FadeIn delay={0.4}>
-              <AddToCartButton 
-                variantId={variantId} 
+              <ProductForm 
+                options={options} 
+                variants={variants} 
                 productTitle={product.title} 
                 price={formattedPrice} 
               />

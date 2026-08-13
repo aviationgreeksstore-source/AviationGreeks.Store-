@@ -11,10 +11,12 @@
   "dependencies": {
     "@studio-freight/react-lenis": "^0.0.47",
     "framer-motion": "^13.0.0",
+    "html-to-image": "^1.11.13",
     "lucide-react": "^1.29.0",
     "next": "14.2.35",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-qr-code": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",

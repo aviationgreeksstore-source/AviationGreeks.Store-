@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Navbar({ metarTicker }: { metarTicker?: React.ReactNode }) {
+export default function Navbar() {
   const { cart, openCart } = useCart();
   const totalQuantity = cart?.totalQuantity || 0;
   const router = useRouter();
@@ -22,56 +22,95 @@ export default function Navbar({ metarTicker }: { metarTicker?: React.ReactNode 
   };
 
   return (
-    <header className="sticky top-0 z-50 px-8 py-6 flex items-center justify-between border-b border-white/10 bg-black text-white">
-      <div className="flex-1">
-        <Link href="/" className="text-xl font-bold tracking-wider uppercase hover:text-gray-300 transition-colors">
-          AviationGreeks
-        </Link>
-      </div>
-
-      <nav className="hidden md:flex flex-1 justify-center space-x-8">
-        <Link href="/collections" className="text-sm font-medium hover:text-gray-300 transition-colors">Shop the Fleet</Link>
-        <Link href="/media" className="text-sm font-medium hover:text-gray-300 transition-colors">Media</Link>
-        <Link href="/community" className="text-sm font-medium hover:text-gray-300 transition-colors">Community</Link>
-      </nav>
-
-      <div className="flex flex-1 justify-end items-center space-x-4 min-w-0">
-        <div className="hidden md:block flex-1 min-w-0 truncate text-right">
-          {metarTicker}
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/70 backdrop-blur-xl text-white transition-all duration-300">
+      <div className="px-6 md:px-12 py-5 flex items-center justify-between max-w-[1600px] mx-auto">
+        
+        {/* Left Side: Mobile Logo / Desktop Left Links */}
+        <div className="flex-1 flex items-center justify-start gap-6">
+          <Link href="/" className="md:hidden text-xl font-bold tracking-wider uppercase">
+            AVG
+          </Link>
+          <nav className="hidden md:flex items-center gap-6">
+            <Link href="/collections" className="group relative text-xs font-bold tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition-colors py-1">
+              Shop the Fleet
+              <span className="absolute inset-x-0 -bottom-1 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out" />
+            </Link>
+            <Link href="/about" className="group relative text-xs font-bold tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition-colors py-1">
+              About Us
+              <span className="absolute inset-x-0 -bottom-1 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out" />
+            </Link>
+          </nav>
         </div>
-        <form onSubmit={handleSearch} className="hidden md:flex items-center flex-shrink-0">
-          <input 
-            type="text" 
-            placeholder="Search gear..." 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-b border-white/20 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-white px-2 py-1 w-48 transition-all focus:w-64"
-          />
-          <button type="submit" className="p-2 hover:text-gray-300 transition-colors" aria-label="Search">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-          </button>
-        </form>
-        <button onClick={openCart} className="relative p-2 hover:text-gray-300 transition-colors flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-          </svg>
-        {totalQuantity > 0 && (
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-black transform translate-x-1/4 -translate-y-1/4 bg-white rounded-full">
-            {totalQuantity}
-          </span>
-        )}
-        </button>
-        <button 
-          className="md:hidden p-2 text-white hover:text-gray-300 transition-colors ml-2" 
-          onClick={() => setIsMobileMenuOpen(true)}
-          aria-label="Open Menu"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-        </button>
+
+        {/* Center: Desktop Logo */}
+        <div className="shrink-0 flex items-center justify-center">
+          <Link href="/" className="group flex flex-col items-center">
+            <span className="text-2xl font-black tracking-[0.25em] uppercase text-white group-hover:text-flight-amber transition-colors duration-500">
+              AviationGreeks
+            </span>
+            <div className="w-1/2 h-[1px] bg-white/20 mt-2 group-hover:w-full group-hover:bg-flight-amber transition-all duration-500" />
+          </Link>
+        </div>
+
+        {/* Right Side: Desktop Right Links & Icons */}
+        <div className="flex-1 flex items-center justify-end gap-6">
+          <nav className="hidden md:flex items-center gap-6">
+            <Link href="/media" className="group relative text-xs font-bold tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition-colors py-1">
+              Media
+              <span className="absolute inset-x-0 -bottom-1 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out" />
+            </Link>
+            <Link href="/community" className="group relative text-xs font-bold tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition-colors py-1">
+              Community
+              <span className="absolute inset-x-0 -bottom-1 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out" />
+            </Link>
+          </nav>
+
+          {/* Search & Cart Icons */}
+          <div className="flex items-center gap-4">
+            
+            <form onSubmit={handleSearch} className="hidden md:flex items-center relative group">
+              <input 
+                type="text" 
+                placeholder="Search..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-transparent border-b border-white/20 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white px-2 py-1 w-24 focus:w-48 transition-all duration-500"
+              />
+              <button type="submit" className="absolute right-0 p-1 text-neutral-400 hover:text-white transition-colors" aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+              </button>
+            </form>
+
+            <Link href="/account" className="p-2 text-neutral-400 hover:text-white transition-colors" aria-label="Account Dossier">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
+            </Link>
+            
+            <button onClick={openCart} className="relative p-2 text-neutral-300 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+              </svg>
+              {totalQuantity > 0 && (
+                <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-[9px] font-bold text-black transform translate-x-1/4 -translate-y-1/4 bg-flight-amber rounded-full">
+                  {totalQuantity}
+                </span>
+              )}
+            </button>
+            
+            <button 
+              className="md:hidden p-2 text-white hover:text-gray-300 transition-colors" 
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open Menu"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -96,18 +135,14 @@ export default function Navbar({ metarTicker }: { metarTicker?: React.ReactNode 
             </div>
             
             <nav className="flex flex-col space-y-6 text-center mt-4">
-              <Link href="/collections" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-aegean-blue transition-colors">Shop the Fleet</Link>
-              <Link href="/media" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-aegean-blue transition-colors">Media</Link>
-              <Link href="/community" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-aegean-blue transition-colors">Community</Link>
+              <Link href="/collections" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">Shop the Fleet</Link>
+              <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">About Us</Link>
+              <Link href="/media" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">Media</Link>
+              <Link href="/community" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">Community</Link>
+              <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">Dossier</Link>
             </nav>
             
             <div className="flex justify-center mt-auto pb-12">
-              <div className="flex flex-col items-center">
-                <span className="text-xs text-gray-500 uppercase tracking-widest mb-4">Live Datalink</span>
-                <div className="bg-[#111111] py-3 px-2 rounded-sm border border-[#333333]">
-                  {metarTicker}
-                </div>
-              </div>
             </div>
 
             <form onSubmit={(e) => { setIsMobileMenuOpen(false); handleSearch(e); }} className="mt-12 flex flex-col items-center">

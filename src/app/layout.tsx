@@ -43,7 +43,7 @@ export default function RootLayout({
         <SmoothScroll>
           <CartProvider>
             <AnnouncementBar />
-            <Navbar metarTicker={<LiveMetar />} />
+            <Navbar />
             <main className="min-h-screen">
               {children}
             </main>
