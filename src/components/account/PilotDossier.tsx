@@ -3,11 +3,48 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+interface CustomerAddress {
+  address1: string;
+  address2: string;
+  city: string;
+  provinceCode: string;
+  zip: string;
+  countryCode: string;
+}
+
+interface CustomerProfile {
+  firstName: string;
+  lastName: string;
+  email: string;
+  acceptsMarketing: boolean;
+  defaultAddress: CustomerAddress | null;
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+function buildAddressString(addr: CustomerAddress): string {
+  const lines = [
+    addr.address1,
+    addr.address2,
+    [addr.city, addr.provinceCode, addr.zip].filter(Boolean).join(', '),
+    addr.countryCode
+  ].filter(Boolean);
+  return lines.join('\n');
+}
+
 export default function PilotDossier() {
+  // --- Live data state ---------------------------------------------------
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const [hasAddress, setHasAddress] = useState(true);
+
   // Operative form state
-  const [operativeName, setOperativeName] = useState('John Doe');
-  const [operativeEmail, setOperativeEmail] = useState('pilot@example.com');
-  const [shippingAddress, setShippingAddress] = useState('123 Aviation Way\nHangar 4\nLos Angeles, CA 90001');
+  const [operativeName, setOperativeName] = useState('');
+  const [operativeEmail, setOperativeEmail] = useState('');
+  const [shippingAddress, setShippingAddress] = useState('');
 
   // Comms Frequency state
   const [commsEnabled, setCommsEnabled] = useState(false);
@@ -139,6 +176,53 @@ export default function PilotDossier() {
     console.log('Access codes reset triggered for:', operativeEmail);
   };
 
+  // --- Fetch live operative profile from /api/customer on mount ----------
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        setIsLoadingProfile(true);
+        const token =
+          typeof window !== 'undefined'
+            ? localStorage.getItem('shopify_customer_access_token')
+            : null;
+
+        const res = await fetch('/api/customer', {
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
+
+        if (!res.ok) {
+          // Unauthenticated or expired token — leave placeholders in place
+          setIsLoadingProfile(false);
+          return;
+        }
+
+        const data: { success: boolean; customer: CustomerProfile } = await res.json();
+
+        if (data.success && data.customer) {
+          const c = data.customer;
+          setOperativeName(`${c.firstName} ${c.lastName}`.trim());
+          setOperativeEmail(c.email);
+          setCommsEnabled(c.acceptsMarketing);
+
+          if (c.defaultAddress) {
+            setHasAddress(true);
+            setShippingAddress(buildAddressString(c.defaultAddress));
+          } else {
+            setHasAddress(false);
+            setShippingAddress('');
+          }
+        }
+      } catch (err) {
+        console.error('[PilotDossier] Failed to fetch operative profile:', err);
+      } finally {
+        setIsLoadingProfile(false);
+      }
+    }
+
+    fetchProfile();
+  }, []);
+
+  // --- Scroll spy ---------------------------------------------------------
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['security', 'comms', 'danger'];
@@ -257,52 +341,101 @@ export default function PilotDossier() {
                   <div className="flex-1 h-[1px] bg-gradient-to-r from-zinc-800 to-transparent"></div>
                 </div>
 
+                {/* ---- Amber flicker loading overlay ---- */}
+                {isLoadingProfile && (
+                  <motion.p
+                    animate={{ opacity: [1, 0.3, 1] }}
+                    transition={{ duration: 0.9, repeat: Infinity, ease: 'linear' }}
+                    className="font-mono text-xs text-amber-400 tracking-widest uppercase mb-8"
+                  >
+                    [ RETRIEVING SECURE DOSSIER... ]
+                  </motion.p>
+                )}
+
                 <form onSubmit={handleUpdateProfile} className="space-y-8 max-w-xl group/form">
+                  {/* OPERATIVE NAME */}
                   <div className="space-y-2 relative group/input">
                     <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-0 bg-zinc-600 transition-all duration-300 group-focus-within/input:h-4 hidden md:block"></div>
                     <label className="block font-mono text-[10px] text-zinc-500 tracking-widest uppercase group-focus-within/input:text-zinc-300 transition-colors">
                       Operative Name
                     </label>
-                    <input
-                      type="text"
-                      value={operativeName}
-                      onChange={(e) => setOperativeName(e.target.value)}
-                      className="w-full bg-transparent border-b border-zinc-800 pb-3 text-zinc-200 focus:outline-none focus:border-zinc-400 transition-colors font-medium tracking-wide"
-                    />
+                    {isLoadingProfile ? (
+                      <motion.span
+                        animate={{ opacity: [1, 0.2, 1] }}
+                        transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                        className="block font-mono text-xs text-amber-400 tracking-widest pb-3 border-b border-zinc-800"
+                      >
+                        [ RETRIEVING SECURE DOSSIER... ]
+                      </motion.span>
+                    ) : (
+                      <input
+                        type="text"
+                        value={operativeName}
+                        onChange={(e) => setOperativeName(e.target.value)}
+                        className="w-full bg-transparent border-b border-zinc-800 pb-3 text-zinc-200 focus:outline-none focus:border-zinc-400 transition-colors font-medium tracking-wide"
+                      />
+                    )}
                   </div>
 
+                  {/* CONTACT EMAIL */}
                   <div className="space-y-2 relative group/input">
                     <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-0 bg-zinc-600 transition-all duration-300 group-focus-within/input:h-4 hidden md:block"></div>
                     <label className="block font-mono text-[10px] text-zinc-500 tracking-widest uppercase group-focus-within/input:text-zinc-300 transition-colors">
                       Contact Email
                     </label>
-                    <input
-                      type="email"
-                      value={operativeEmail}
-                      onChange={(e) => setOperativeEmail(e.target.value)}
-                      className="w-full bg-transparent border-b border-zinc-800 pb-3 text-zinc-200 focus:outline-none focus:border-zinc-400 transition-colors font-medium tracking-wide"
-                    />
+                    {isLoadingProfile ? (
+                      <motion.span
+                        animate={{ opacity: [1, 0.2, 1] }}
+                        transition={{ duration: 0.8, repeat: Infinity, ease: 'linear', delay: 0.15 }}
+                        className="block font-mono text-xs text-amber-400 tracking-widest pb-3 border-b border-zinc-800"
+                      >
+                        [ RETRIEVING SECURE DOSSIER... ]
+                      </motion.span>
+                    ) : (
+                      <input
+                        type="email"
+                        value={operativeEmail}
+                        onChange={(e) => setOperativeEmail(e.target.value)}
+                        className="w-full bg-transparent border-b border-zinc-800 pb-3 text-zinc-200 focus:outline-none focus:border-zinc-400 transition-colors font-medium tracking-wide"
+                      />
+                    )}
                   </div>
 
+                  {/* PRIMARY DROPOFF LOCATION */}
                   <div className="space-y-2 relative group/input">
                     <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-0 bg-zinc-600 transition-all duration-300 group-focus-within/input:h-8 hidden md:block"></div>
                     <label className="block font-mono text-[10px] text-zinc-500 tracking-widest uppercase group-focus-within/input:text-zinc-300 transition-colors">
                       Primary Dropoff Location (Shipping)
                     </label>
-                    <textarea
-                      value={shippingAddress}
-                      onChange={(e) => setShippingAddress(e.target.value)}
-                      rows={3}
-                      className="w-full bg-transparent border-b border-zinc-800 pb-3 text-zinc-200 focus:outline-none focus:border-zinc-400 transition-colors font-medium tracking-wide resize-none leading-relaxed"
-                    />
+                    {isLoadingProfile ? (
+                      <motion.span
+                        animate={{ opacity: [1, 0.2, 1] }}
+                        transition={{ duration: 0.8, repeat: Infinity, ease: 'linear', delay: 0.3 }}
+                        className="block font-mono text-xs text-amber-400 tracking-widest pb-3 border-b border-zinc-800"
+                      >
+                        [ RETRIEVING SECURE DOSSIER... ]
+                      </motion.span>
+                    ) : !hasAddress ? (
+                      <p className="font-mono text-xs text-zinc-600 tracking-widest pb-3 border-b border-zinc-800 uppercase">
+                        [ NO DROP ZONE ESTABLISHED ]
+                      </p>
+                    ) : (
+                      <textarea
+                        value={shippingAddress}
+                        onChange={(e) => setShippingAddress(e.target.value)}
+                        rows={3}
+                        className="w-full bg-transparent border-b border-zinc-800 pb-3 text-zinc-200 focus:outline-none focus:border-zinc-400 transition-colors font-medium tracking-wide resize-none leading-relaxed"
+                      />
+                    )}
                   </div>
 
                   <button
                     type="submit"
-                    className="group relative overflow-hidden px-8 py-4 bg-zinc-100 text-zinc-950 font-mono text-xs tracking-widest hover:bg-white transition-colors uppercase font-bold mt-4"
+                    disabled={isLoadingProfile}
+                    className="group relative overflow-hidden px-8 py-4 bg-zinc-100 text-zinc-950 font-mono text-xs tracking-widest hover:bg-white transition-colors uppercase font-bold mt-4 disabled:opacity-40 disabled:cursor-wait"
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      UPDATE DOSSIER
+                      {!hasAddress && !isLoadingProfile ? 'CONFIGURE DROPOFF LOCATION' : 'UPDATE DOSSIER'}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
