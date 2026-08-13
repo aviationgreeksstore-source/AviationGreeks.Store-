@@ -174,7 +174,8 @@ export default function PilotDossier() {
             </h1>
             <p className="font-mono text-[11px] md:text-xs text-zinc-500 tracking-widest uppercase flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
-              // Classified Access Terminal // ID: AV-8832
+              {/* Classified Access Terminal // ID: AV-8832 */}
+              Classified Access Terminal &mdash; ID: AV-8832
             </p>
           </div>
 
@@ -528,7 +529,7 @@ export default function PilotDossier() {
                         {decommissionResult.message}
                       </p>
                       <p className="font-mono text-[10px] text-red-400/80 uppercase tracking-widest">
-                        Target: {operativeEmail} // Recorded At: {decommissionResult.timestamp}
+                        Target: {operativeEmail} &mdash; Recorded At: {decommissionResult.timestamp}
                       </p>
                     </motion.div>
                   )}
@@ -596,7 +597,7 @@ export default function PilotDossier() {
                 </p>
                 <div className="p-4 bg-zinc-950 border border-red-900/30 rounded-sm">
                   <p className="font-mono text-[10px] md:text-xs text-red-400/80 uppercase tracking-widest leading-relaxed">
-                    // WARNING: All associated flight logs, order history, and clearance codes will be erased
+                    WARNING: All associated flight logs, order history, and clearance codes will be erased
                     immediately. Data recovery is not possible.
                   </p>
                 </div>

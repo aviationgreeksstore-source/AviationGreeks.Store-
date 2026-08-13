@@ -57,7 +57,7 @@ export default function ShakeToIdentRadar({ children, discountCode }: ShakeToIde
 
     window.addEventListener('devicemotion', handleMotion);
     return () => window.removeEventListener('devicemotion', handleMotion);
-  }, [isSupported, isTriggered]);
+  }, [isSupported, isTriggered, discountCode]);
 
   const triggerIdent = () => {
     setIsTriggered(true);
