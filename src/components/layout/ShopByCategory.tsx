@@ -20,7 +20,7 @@ export default async function ShopByCategory() {
           {collections.map((collection) => (
             <Link 
               key={collection.id} 
-              href={`/search/${collection.handle}`}
+              href={`/collections/${collection.handle}`}
               className="group relative block aspect-[4/5] overflow-hidden rounded-sm border border-transparent hover:border-white/20 transition-colors duration-500 bg-neutral-900"
             >
               {collection.image?.url ? (
