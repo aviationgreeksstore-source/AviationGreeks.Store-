@@ -23,6 +23,7 @@ import LiveMetar from "@/components/layout/LiveMetar";
 import NewsletterFlyout from "@/components/newsletter/NewsletterFlyout";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import AltimeterScrollbar from "@/components/layout/AltimeterScrollbar";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const revalidate = 60; // Revalidate all pages every 60 seconds
 
@@ -55,6 +56,7 @@ export default function RootLayout({
           </CartProvider>
         </SmoothScroll>
       </body>
+      <GoogleAnalytics gaId="G-BR4DTR1SFX" />
     </html>
   );
 }
