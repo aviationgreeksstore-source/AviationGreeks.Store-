@@ -53,41 +53,40 @@ export default function CommsRadioTicker({ discordUrl = "https://discord.gg/your
           </div>
 
           {/* Mask for the scrolling area */}
-          <div className="flex-1 ml-10 overflow-hidden relative h-full flex items-center">
-            
+          <div className="flex-1 ml-6 sm:ml-8 overflow-hidden relative h-full flex items-center">
+            {/* Edge fade gradients for seamless ticker appearance */}
+            <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+
             {/* Overlay on hover */}
             <div 
               className={`absolute inset-0 z-20 flex items-center justify-center bg-black/80 transition-opacity duration-300 ${
                 isHovered ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              <span className="font-mono text-white uppercase tracking-widest text-sm md:text-base font-bold animate-pulse">
+              <span className="font-mono text-white uppercase tracking-widest text-xs sm:text-sm md:text-base font-bold animate-pulse">
                 [ CLICK TO JOIN FREQUENCY ]
               </span>
             </div>
 
             {/* Scrolling Text */}
             <motion.div
-              className={`flex whitespace-nowrap gap-8 transition-colors duration-300 ${
+              className={`flex whitespace-nowrap gap-6 sm:gap-8 transition-colors duration-300 ${
                 isHovered ? 'text-white' : 'text-emerald-500'
               }`}
               style={{ x }}
             >
-              {/* Render items twice to ensure smooth visual wrap-around if needed, 
-                  though with a 100% to -100% full translation, a single block can work.
-                  Duplicating creates a longer continuous datalink string. */}
               {radioMessages.map((msg, i) => (
-                <span key={`a-${i}`} className="font-mono uppercase tracking-widest text-sm md:text-base">
+                <span key={`a-${i}`} className="font-mono uppercase tracking-widest text-xs sm:text-sm md:text-base">
                   {msg}
                 </span>
               ))}
               {radioMessages.map((msg, i) => (
-                <span key={`b-${i}`} className="font-mono uppercase tracking-widest text-sm md:text-base">
+                <span key={`b-${i}`} className="font-mono uppercase tracking-widest text-xs sm:text-sm md:text-base">
                   {msg}
                 </span>
               ))}
             </motion.div>
-
           </div>
         </div>
       </div>

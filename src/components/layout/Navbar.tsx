@@ -25,11 +25,8 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/70 backdrop-blur-xl text-white transition-all duration-300">
       <div className="px-6 md:px-12 py-5 flex items-center justify-between max-w-[1600px] mx-auto">
         
-        {/* Left Side: Mobile Logo / Desktop Left Links */}
+        {/* Left Side: Desktop Left Links */}
         <div className="flex-1 flex items-center justify-start gap-6">
-          <Link href="/" className="md:hidden text-xl font-bold tracking-wider uppercase">
-            AVG
-          </Link>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/collections" className="group relative text-xs font-bold tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition-colors py-1">
               Shop the Fleet
@@ -42,13 +39,13 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* Center: Desktop Logo */}
+        {/* Center: Brand Logo */}
         <div className="shrink-0 flex items-center justify-center">
           <Link href="/" className="group flex flex-col items-center">
-            <span className="text-2xl font-black tracking-[0.25em] uppercase text-white group-hover:text-flight-amber transition-colors duration-500">
+            <span className="text-lg sm:text-xl md:text-2xl font-black tracking-[0.2em] md:tracking-[0.25em] uppercase text-white group-hover:text-flight-amber transition-colors duration-500">
               AviationGreeks
             </span>
-            <div className="w-1/2 h-[1px] bg-white/20 mt-2 group-hover:w-full group-hover:bg-flight-amber transition-all duration-500" />
+            <div className="w-1/2 h-[1px] bg-white/20 mt-1 md:mt-2 group-hover:w-full group-hover:bg-flight-amber transition-all duration-500" />
           </Link>
         </div>
 
@@ -120,7 +117,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-black flex flex-col p-8"
+            className="fixed inset-0 z-[100] bg-[#050505] flex flex-col p-8 overflow-y-auto"
           >
             <div className="flex justify-end mb-8">
               <button 

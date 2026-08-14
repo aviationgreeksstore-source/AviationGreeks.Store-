@@ -8,12 +8,24 @@ export default function NewsletterFlyout() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // If user previously closed the flyout in this session, don't show it again
+    if (typeof window !== "undefined" && sessionStorage.getItem("newsletter_flyout_dismissed") === "true") {
+      return;
+    }
+
     // Show the flyout after a short delay so it doesn't immediately pop up
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 5000);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleDismiss = () => {
+    setIsVisible(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("newsletter_flyout_dismissed", "true");
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -23,11 +35,11 @@ export default function NewsletterFlyout() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50, transition: { duration: 0.2 } }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="fixed bottom-6 right-6 md:right-24 z-50 w-full max-w-sm bg-black border border-white/10 p-6 shadow-2xl"
+          className="fixed bottom-4 right-4 left-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 w-auto sm:w-full sm:max-w-sm bg-black border border-white/10 p-6 shadow-2xl rounded-sm"
         >
           <button
-            onClick={() => setIsVisible(false)}
-            className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors"
+            onClick={handleDismiss}
+            className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors p-1"
             aria-label="Close newsletter flyout"
           >
             <X className="w-5 h-5" />
