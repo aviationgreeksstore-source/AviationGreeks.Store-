@@ -1,6 +1,6 @@
 import { getProductRecommendations } from '@/lib/shopify';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 
 export default async function ProductRecommendations({ productId }: { productId: string }) {
   let products: any[] = [];
@@ -26,10 +26,11 @@ export default async function ProductRecommendations({ productId }: { productId:
           <Link href={`/product/${product.handle}`} key={product.id} className="group cursor-pointer block">
             <div className="aspect-[4/5] bg-neutral-800 rounded-sm mb-4 overflow-hidden relative">
               {product.featuredImage?.url ? (
-                <Image 
+                <OptimizedImage 
                   src={product.featuredImage.url} 
                   alt={product.featuredImage.altText || product.title} 
                   fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" 
                 />
               ) : (

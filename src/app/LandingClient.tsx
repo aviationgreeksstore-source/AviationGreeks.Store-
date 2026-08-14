@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Globe2, ShieldCheck, Award, ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 import NewsletterForm from "@/components/newsletter/NewsletterForm";
 import QuickAddButton from "@/components/cart/QuickAddButton";
 import { takeoffVariant, hudRevealVariant, approachStaggerContainer } from "@/lib/animations";
@@ -156,10 +156,12 @@ export default function LandingClient({ products, shopByCategory }: { products: 
                         </div>
                       )}
                       {node.featuredImage?.url ? (
-                        <Image
+                        <OptimizedImage
                           src={node.featuredImage.url}
                           alt={node.featuredImage.altText || node.title}
                           fill
+                          priority={idx < 4}
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                       ) : (

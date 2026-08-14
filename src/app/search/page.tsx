@@ -1,6 +1,6 @@
 import { searchProducts } from '@/lib/shopify';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 import { redirect } from 'next/navigation';
 
 export default async function SearchPage({
@@ -28,14 +28,16 @@ export default async function SearchPage({
         
         {products.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 md:gap-8">
-            {products.map((product: any) => (
+            {products.map((product: any, idx: number) => (
               <Link href={`/product/${product.handle}`} key={product.id} className="group cursor-pointer block">
                 <div className="aspect-[4/5] bg-neutral-800 rounded-sm mb-4 overflow-hidden relative">
                   {product.featuredImage?.url ? (
-                    <Image 
+                    <OptimizedImage 
                       src={product.featuredImage.url} 
                       alt={product.featuredImage.altText || product.title} 
                       fill
+                      priority={idx < 4}
+                      sizes="(max-width: 768px) 50vw, 25vw"
                       className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" 
                     />
                   ) : (

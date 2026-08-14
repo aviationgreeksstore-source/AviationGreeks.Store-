@@ -1,6 +1,6 @@
 import { getCollection } from '@/lib/shopify';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 import { notFound } from 'next/navigation';
 
 export default async function CategoryPage({ params }: { params: { handle: string } }) {
@@ -26,14 +26,16 @@ export default async function CategoryPage({ params }: { params: { handle: strin
         
         {products.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-8 md:gap-8">
-            {products.map(({ node }: any) => (
+            {products.map(({ node }: any, idx: number) => (
               <Link href={`/product/${node.handle}`} key={node.id} className="group cursor-pointer block">
                 <div className="aspect-[4/5] bg-neutral-800 rounded-sm mb-4 overflow-hidden relative">
                   {node.featuredImage?.url ? (
-                    <Image 
+                    <OptimizedImage 
                       src={node.featuredImage.url} 
                       alt={node.featuredImage.altText || node.title} 
                       fill
+                      priority={idx < 4}
+                      sizes="(max-width: 768px) 50vw, 33vw"
                       className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" 
                     />
                   ) : (

@@ -1,6 +1,6 @@
 import { getCollections } from '@/lib/shopify';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 
 export default async function CollectionsPage() {
   const collections = await getCollections();
@@ -14,14 +14,16 @@ export default async function CollectionsPage() {
         
         {collections.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-8 md:gap-8">
-            {collections.map((collection) => (
+            {collections.map((collection, idx) => (
               <Link href={`/collections/${collection.handle}`} key={collection.id} className="group cursor-pointer block">
                 <div className="aspect-square bg-neutral-800 rounded-sm mb-4 overflow-hidden relative">
                   {collection.image?.url ? (
-                    <Image 
+                    <OptimizedImage 
                       src={collection.image.url} 
                       alt={collection.image.altText || collection.title}
-                      fill 
+                      fill
+                      priority={idx < 4}
+                      sizes="(max-width: 768px) 50vw, 33vw"
                       className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" 
                     />
                   ) : (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 import { getCollections } from "@/lib/shopify";
 
 export default async function ShopByCategory() {
@@ -24,10 +24,11 @@ export default async function ShopByCategory() {
               className="group relative block aspect-[4/5] overflow-hidden rounded-sm border border-transparent hover:border-white/20 transition-colors duration-500 bg-neutral-900"
             >
               {collection.image?.url ? (
-                <Image
+                <OptimizedImage
                   src={collection.image.url}
                   alt={collection.title}
                   fill
+                  priority={true}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />

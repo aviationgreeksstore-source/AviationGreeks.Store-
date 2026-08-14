@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useState as useReactState } from "react";
 
 // Sample transparent t-shirt images (or placeholders)
 const SHIRT_IMAGES = [
@@ -93,7 +94,9 @@ export default function ZeroGHero() {
                 src={shirt.src}
                 alt="Floating gear"
                 fill
-                className="object-cover"
+                priority={true}
+                sizes="(max-width: 768px) 50vw, 33vw"
+                className={`object-cover transition-opacity duration-1000 ease-in-out ${isMounted ? 'opacity-100' : 'opacity-0'}`}
               />
             </div>
           </motion.div>

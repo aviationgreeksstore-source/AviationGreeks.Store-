@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 import { useCart } from './CartContext';
 import PriorityLogisticsBar from './PriorityLogisticsBar';
 import SmartPayloadUpsell from './SmartPayloadUpsell';
@@ -68,10 +68,11 @@ export default function SlideOutCart() {
                   </button>
                   <div className="w-20 h-24 bg-zinc-800 rounded-sm overflow-hidden flex-shrink-0 relative">
                     {product.featuredImage?.url ? (
-                      <Image
+                      <OptimizedImage
                         src={product.featuredImage.url}
                         alt={product.featuredImage.altText || product.title}
                         fill
+                        sizes="80px"
                         className="object-cover w-full h-full"
                       />
                     ) : (

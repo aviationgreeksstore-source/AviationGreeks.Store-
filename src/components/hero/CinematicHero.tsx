@@ -1,21 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useState as useReactState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { approachStaggerContainer, hudRevealVariant } from "@/lib/animations"; // Use existing animation variants
 
 export default function CinematicHero() {
+  const [isLoaded, setIsLoaded] = useReactState(false);
+
   return (
     <section className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden border-b border-[#333333]">
       {/* Background Image */}
       <Image
-        className="absolute inset-0 w-full h-full object-cover z-0"
         src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=2000&auto=format&fit=crop"
         alt="Aviation cinematic background"
         fill
         priority
+        sizes="100vw"
+        onLoad={() => setIsLoaded(true)}
+        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ease-in-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
       />
 
       {/* Dark overlay for text legibility */}

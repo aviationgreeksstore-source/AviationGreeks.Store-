@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/components/cart/CartContext';
 import { fetchAIRecommendation } from './upsell-actions';
@@ -105,10 +105,11 @@ export default function SmartPayloadUpsell() {
                 {/* Thumbnail */}
                 <div className="relative w-16 h-16 bg-zinc-900 border border-zinc-800 flex-shrink-0">
                   {recommendedProduct.featuredImage?.url && (
-                    <Image 
+                    <OptimizedImage 
                       src={recommendedProduct.featuredImage.url} 
                       alt={recommendedProduct.title}
                       fill
+                      sizes="64px"
                       className="object-cover"
                     />
                   )}

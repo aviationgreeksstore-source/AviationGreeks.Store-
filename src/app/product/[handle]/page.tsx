@@ -1,6 +1,6 @@
 import { shopifyFetch } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 import ProductForm from '@/components/product/ProductForm';
 import ShakeToIdentRadar from '@/components/product/ShakeToIdentRadar';
 import ProductRecommendations from '@/components/product/ProductRecommendations';
@@ -132,11 +132,12 @@ export default async function ProductPage({ params }: { params: { handle: string
             <ShakeToIdentRadar discountCode={product.shakeDiscount?.value}>
               <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
                 {product.featuredImage?.url ? (
-                  <Image 
+                  <OptimizedImage 
                     src={product.featuredImage.url} 
                     alt={product.featuredImage.altText || product.title}
                     fill
-                    priority 
+                    priority={true} 
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover w-full h-full pointer-events-none"
                   />
                 ) : (

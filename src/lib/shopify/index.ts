@@ -91,7 +91,7 @@ const cartFragment = `
                 title
                 handle
                 featuredImage {
-                  url
+                  url(transform: { maxWidth: 400, preferredContentType: WEBP })
                   altText
                 }
               }
@@ -235,7 +235,7 @@ const getCollectionsQuery = `
           handle
           description
           image {
-            url
+            url(transform: { maxWidth: 800, preferredContentType: WEBP })
             altText
           }
         }
@@ -252,7 +252,7 @@ const getCollectionQuery = `
       handle
       description
       image {
-        url
+        url(transform: { maxWidth: 800, preferredContentType: WEBP })
         altText
       }
       products(first: 100) {
@@ -262,7 +262,7 @@ const getCollectionQuery = `
             title
             handle
             featuredImage {
-              url
+              url(transform: { maxWidth: 800, preferredContentType: WEBP })
               altText
             }
             priceRange {
@@ -312,7 +312,7 @@ const getProductRecommendationsQuery = `
       title
       handle
       featuredImage {
-        url
+        url(transform: { maxWidth: 800, preferredContentType: WEBP })
         altText
       }
       priceRange {
@@ -354,7 +354,7 @@ const searchProductsQuery = `
           title
           handle
           featuredImage {
-            url
+            url(transform: { maxWidth: 800, preferredContentType: WEBP })
             altText
           }
           priceRange {
