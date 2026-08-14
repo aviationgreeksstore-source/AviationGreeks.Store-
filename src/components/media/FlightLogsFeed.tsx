@@ -50,7 +50,7 @@ export default async function FlightLogsFeed() {
   const apiKey = process.env.YOUTUBE_API_KEY;
   const channelId = process.env.YOUTUBE_CHANNEL_ID;
 
-  let videos = [];
+  let videos: { id: string; title: string; thumbnail: string; publishedAt: string }[] = [];
   let usingFallback = false;
 
   if (!apiKey || !channelId) {
