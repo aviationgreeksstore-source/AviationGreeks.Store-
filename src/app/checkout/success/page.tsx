@@ -1,42 +1,81 @@
-import React from 'react';
+"use client";
+
+import React, { useEffect, useState, Suspense } from 'react';
 import { BoardingPassReceipt } from '@/components/checkout/BoardingPassReceipt';
+import { getCartAction } from '@/components/cart/actions';
+import { useSearchParams } from 'next/navigation';
 
-// Mock data for demonstration - in a real app you'd fetch this using the search params 
-// (e.g. ?order_id=xxx) or retrieve it from your state management / database.
-export default function CheckoutSuccessPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  // Extract order ID from URL or use a generated mock squawk code
-  const orderId = (searchParams.order_id as string) || `AG-${Math.floor(100000 + Math.random() * 900000)}`;
-  
-  // Mock items payload
-  const mockItems = [
-    {
-      id: '1',
-      title: 'A320 NEO CAPTAIN HOODIE',
-      quantity: 1,
-      price: 89.99,
-      notes: 'SIZE: L | WT: 0.8KG'
-    },
-    {
-      id: '2',
-      title: 'REMOVE BEFORE FLIGHT KEYCHAIN',
-      quantity: 3,
-      price: 9.99,
-      notes: 'COLOR: RED | WT: 0.1KG'
-    },
-    {
-      id: '3',
-      title: 'ATC CLEARANCE DESK MAT',
-      quantity: 1,
-      price: 34.99,
-      notes: 'DIM: 90x40CM | WT: 0.5KG'
+function CheckoutSuccessContent() {
+  const searchParams = useSearchParams();
+  const [items, setItems] = useState<any[]>([]);
+  const [total, setTotal] = useState(0);
+  const [orderId, setOrderId] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadReceiptData() {
+      try {
+        const urlOrderId = searchParams.get('order_id');
+        const urlCartId = searchParams.get('cart_id');
+        const cartId = urlCartId || localStorage.getItem('shopify_cart_id');
+        
+        // Check if we already have a saved receipt from a recent purchase
+        const savedReceipt = localStorage.getItem('last_order_receipt');
+        if (savedReceipt && !cartId) {
+          const data = JSON.parse(savedReceipt);
+          setItems(data.items);
+          setTotal(data.total);
+          setOrderId(urlOrderId || data.orderId);
+          setLoading(false);
+          return;
+        }
+
+        const newOrderId = urlOrderId || `AG-${Math.floor(100000 + Math.random() * 900000)}`;
+        setOrderId(newOrderId);
+
+        if (cartId) {
+          const result = await getCartAction(cartId);
+          if (result.success && result.cart) {
+            const cartItems = result.cart.lines.edges.map((edge: any) => {
+              const node = edge.node;
+              const productTitle = node.merchandise.product.title;
+              const variantTitle = node.merchandise.title !== 'Default Title' ? node.merchandise.title : '';
+              return {
+                id: node.id,
+                title: productTitle,
+                quantity: node.quantity,
+                price: parseFloat(node.cost.totalAmount.amount) / node.quantity,
+                notes: variantTitle
+              };
+            });
+            
+            const cartTotal = parseFloat(result.cart.cost.subtotalAmount.amount);
+            
+            setItems(cartItems);
+            setTotal(cartTotal);
+            
+            // Save receipt and clear cart so it doesn't show up in the slide out cart anymore
+            localStorage.setItem('last_order_receipt', JSON.stringify({ items: cartItems, total: cartTotal, orderId: newOrderId }));
+            localStorage.removeItem('shopify_cart_id');
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load real cart data for receipt", e);
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+    
+    loadReceiptData();
+  }, [searchParams]);
 
-  const mockTotal = mockItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  if (loading) {
+     return (
+       <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center text-white py-12 md:py-24 px-4">
+         <div className="animate-pulse tracking-widest text-sm text-zinc-500 font-bold uppercase">Loading Flight Manifest...</div>
+       </div>
+     );
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 py-12 md:py-24 px-4 sm:px-6">
@@ -52,11 +91,23 @@ export default function CheckoutSuccessPage({
 
       <BoardingPassReceipt 
         orderId={orderId} 
-        items={mockItems} 
-        customerName="JOHN DOE" 
-        total={mockTotal} 
+        items={items} 
+        customerName="AVIATOR" 
+        total={total} 
         destination="LHR - London, UK"
       />
     </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center text-white py-12 md:py-24 px-4">
+        <div className="animate-pulse tracking-widest text-sm text-zinc-500 font-bold uppercase">Loading Flight Manifest...</div>
+      </div>
+    }>
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }
