@@ -75,9 +75,7 @@ export default function PilotDossier() {
     setCommsFeedback({ show: false, message: '', type: 'success' });
 
     try {
-      const token =
-        (typeof window !== 'undefined' && localStorage.getItem('shopify_customer_access_token')) ||
-        'DEMO_PILOT_ACCESS_TOKEN';
+      const token = typeof window !== 'undefined' ? localStorage.getItem('shopify_customer_access_token') : null;
 
       const res = await fetch('/api/customer/update', {
         method: 'POST',
@@ -138,7 +136,7 @@ export default function PilotDossier() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: operativeEmail,
-          id: 'AV-8832',
+          id: 'TERMINAL ONLINE',
           reason: 'Pilot initiated account decommissioning from Dossier terminal.'
         })
       });
@@ -258,8 +256,7 @@ export default function PilotDossier() {
             </h1>
             <p className="font-mono text-[11px] md:text-xs text-zinc-500 tracking-widest uppercase flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
-              {/* Classified Access Terminal // ID: AV-8832 */}
-              Classified Access Terminal &mdash; ID: AV-8832
+              Classified Access Terminal &mdash; TERMINAL ONLINE
             </p>
           </div>
 

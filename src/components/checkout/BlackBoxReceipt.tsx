@@ -22,7 +22,7 @@ export interface BlackBoxReceiptProps {
 export function BlackBoxReceipt({ 
   orderId, 
   items, 
-  customerName = 'GUEST COMMANDER', 
+  customerName = 'COMMANDER', 
   total 
 }: BlackBoxReceiptProps) {
   const router = useRouter();

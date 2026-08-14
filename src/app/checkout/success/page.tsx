@@ -92,9 +92,9 @@ function CheckoutSuccessContent() {
       <BoardingPassReceipt 
         orderId={orderId} 
         items={items} 
-        customerName="AVIATOR" 
-        total={total} 
-        destination="LHR - London, UK"
+        total={total}
+        customerName="COMMANDER" 
+        destination="SECURE DISPATCH"
       />
     </div>
   );

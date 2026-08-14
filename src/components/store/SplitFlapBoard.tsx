@@ -163,42 +163,12 @@ export default function SplitFlapBoard({ products }: SplitFlapBoardProps) {
   const boardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(boardRef, { once: true, margin: "-50px 0px" });
 
-  // Fallback default data for visual testing if no products are passed
-  const displayProducts =
-    products && products.length > 0
-      ? products
-      : [
-          {
-            id: "1",
-            flight: "AG01",
-            dest: "PRIMARY FLIGHT CASE",
-            status: "NOW BOARDING",
-          },
-          {
-            id: "2",
-            flight: "AG45",
-            dest: "AVIATOR SUNGLASSES",
-            status: "DELAYED",
-          },
-          {
-            id: "3",
-            flight: "AG88",
-            dest: "PILOT BOMBER JACKET",
-            status: "ON TIME",
-          },
-          {
-            id: "4",
-            flight: "AG12",
-            dest: "LEATHER LOGBOOK",
-            status: "BOARDING",
-          },
-          {
-            id: "5",
-            flight: "AG99",
-            dest: "ALTIMETER DESK CLOCK",
-            status: "GATE CLOSED",
-          },
-        ];
+  // If no products are passed or the array is empty, we gracefully hide the board.
+  if (!products || products.length === 0) {
+    return null;
+  }
+
+  const displayProducts = products;
 
   return (
     <div className="w-full bg-zinc-950 border-4 border-zinc-900 rounded-xl p-4 md:p-8 shadow-[inset_0_10px_30px_rgba(0,0,0,1),0_20px_40px_rgba(0,0,0,0.5)] overflow-x-auto relative">

@@ -25,7 +25,7 @@ export function BoardingPassReceipt({
   orderId, 
   customerName, 
   items,
-  destination = "LHR - London, UK"
+  destination = "SECURE DISPATCH"
 }: BoardingPassProps) {
   const receiptRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);

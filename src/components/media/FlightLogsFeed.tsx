@@ -44,26 +44,7 @@ interface YouTubeSearchResponse {
   items: YouTubeSearchResult[];
 }
 
-const FALLBACK_VIDEOS = [
-  {
-    id: 'placeholder-1',
-    title: 'Flight Log: Airborne over the Aegean',
-    thumbnail: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=2000&auto=format&fit=crop',
-    publishedAt: new Date().toISOString(),
-  },
-  {
-    id: 'placeholder-2',
-    title: 'Behind the Scenes: A320 Simulator Session',
-    thumbnail: 'https://images.unsplash.com/photo-1587826388965-039c3683a48e?q=80&w=2000&auto=format&fit=crop',
-    publishedAt: new Date(Date.now() - 86400000 * 7).toISOString(), // 1 week ago
-  },
-  {
-    id: 'placeholder-3',
-    title: 'Plane Spotting: Athens International (LGAV)',
-    thumbnail: 'https://images.unsplash.com/photo-1620822606548-a7337da8c1f9?q=80&w=2000&auto=format&fit=crop',
-    publishedAt: new Date(Date.now() - 86400000 * 14).toISOString(), // 2 weeks ago
-  }
-];
+
 
 export default async function FlightLogsFeed() {
   const apiKey = process.env.YOUTUBE_API_KEY;
@@ -74,7 +55,6 @@ export default async function FlightLogsFeed() {
 
   if (!apiKey || !channelId) {
     usingFallback = true;
-    videos = FALLBACK_VIDEOS;
   } else {
     try {
       const res = await fetch(
@@ -97,12 +77,10 @@ export default async function FlightLogsFeed() {
         }));
       } else {
         usingFallback = true;
-        videos = FALLBACK_VIDEOS;
       }
     } catch (error) {
       console.error('YouTube API Error:', error);
       usingFallback = true;
-      videos = FALLBACK_VIDEOS;
     }
   }
 
@@ -114,11 +92,10 @@ export default async function FlightLogsFeed() {
   return (
     <div className="space-y-8">
       {usingFallback && (
-        <div className="bg-[#111111] border border-flight-amber/30 text-flight-amber p-4 rounded-md text-sm font-mono flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center space-x-3">
-            <span className="animate-pulse flex-shrink-0">●</span>
-            <span>[WARNING] DATALINK DISCONNECTED: YOUTUBE API KEYS MISSING. DISPLAYING ARCHIVED FLIGHT LOGS.</span>
-          </div>
+        <div className="bg-[#111111] border border-flight-amber/30 text-flight-amber p-6 rounded-md text-sm font-mono flex flex-col items-center justify-center gap-2 text-center w-full">
+          <span className="animate-pulse">●</span>
+          <span>[ NEW FLIGHT LOGS STREAMING SOON ]</span>
+          <span className="text-xs opacity-70">Awaiting telemetry datalink</span>
         </div>
       )}
 
