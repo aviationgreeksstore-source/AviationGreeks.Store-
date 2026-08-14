@@ -109,7 +109,7 @@ export default function ZeroGHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-white drop-shadow-2xl"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-white drop-shadow-2xl"
         >
           Gear for people <br />
           who actually <br />
@@ -120,7 +120,7 @@ export default function ZeroGHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-lg md:text-xl lg:text-2xl text-gray-300 font-medium tracking-wide max-w-2xl mx-auto mt-6 drop-shadow-lg"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 font-medium tracking-wide max-w-2xl mx-auto mt-4 sm:mt-6 px-4 drop-shadow-lg"
         >
           Premium gear designed for the modern aviator.
           <br className="hidden md:block" /> Engineered for the flight deck, built for the tarmac.
@@ -130,22 +130,22 @@ export default function ZeroGHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-10"
+          className="flex flex-col w-full px-4 sm:px-0 sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 sm:mt-10"
         >
-          <Link href="/collections">
+          <Link href="/collections" className="w-full sm:w-auto">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 bg-aegean-blue text-white text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+              className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-aegean-blue text-white text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]"
             >
               Shop the Fleet
             </motion.button>
           </Link>
-          <Link href="/media">
+          <Link href="/media" className="w-full sm:w-auto">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 bg-black/50 backdrop-blur-md border-2 border-white text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors rounded-sm"
+              className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-black/50 backdrop-blur-md border-2 border-white text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors rounded-sm"
             >
               Watch Our Channel
             </motion.button>

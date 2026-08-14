@@ -34,7 +34,7 @@ export default function CinematicHero() {
       >
         <motion.h1
           variants={hudRevealVariant}
-          className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-white"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-white"
         >
           Gear for people <br />
           who actually <br />
@@ -45,7 +45,7 @@ export default function CinematicHero() {
 
         <motion.p
           variants={hudRevealVariant}
-          className="mt-6 text-lg md:text-xl lg:text-2xl text-gray-300 font-medium tracking-wide max-w-2xl mx-auto"
+          className="mt-6 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 font-medium tracking-wide max-w-2xl mx-auto px-4"
         >
           Premium gear designed for the modern aviator.
           <br className="hidden md:block" /> Engineered for the flight deck, built for the tarmac.
@@ -53,15 +53,15 @@ export default function CinematicHero() {
 
         <motion.div
           variants={hudRevealVariant}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-10"
+          className="flex flex-col w-full px-4 sm:px-0 sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 sm:mt-10"
         >
-          <Link href="/collections">
-            <button className="px-10 py-5 bg-aegean-blue text-white text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+          <Link href="/collections" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-aegean-blue text-white text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]">
               SHOP THE FLEET
             </button>
           </Link>
-          <Link href="/media">
-            <button className="px-10 py-5 bg-transparent border-2 border-white text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors rounded-sm">
+          <Link href="/media" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-transparent border-2 border-white text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors rounded-sm">
               WATCH OUR CHANNEL
             </button>
           </Link>
