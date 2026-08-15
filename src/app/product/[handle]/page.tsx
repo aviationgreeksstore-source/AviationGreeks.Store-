@@ -42,6 +42,24 @@ const getProductQuery = `
               name
               value
             }
+            components(first: 10) {
+              edges {
+                node {
+                  quantity
+                  productVariant {
+                    id
+                    title
+                    image {
+                      url(transform: { maxWidth: 200, preferredContentType: WEBP })
+                      altText
+                    }
+                    product {
+                      title
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -81,6 +99,24 @@ type Product = {
           name: string;
           value: string;
         }[];
+        components?: {
+          edges: Array<{
+            node: {
+              quantity: number;
+              productVariant: {
+                id: string;
+                title: string;
+                image?: {
+                  url: string;
+                  altText?: string;
+                } | null;
+                product: {
+                  title: string;
+                };
+              };
+            };
+          }>;
+        };
       };
     }>;
   };
@@ -95,7 +131,8 @@ export default async function ProductPage({ params }: { params: { handle: string
   try {
     const { body } = await shopifyFetch<{ data: { product: Product | null } }>({
       query: getProductQuery,
-      variables: { handle }
+      variables: { handle },
+      cache: 'no-store'
     });
     product = body.data?.product || null;
 

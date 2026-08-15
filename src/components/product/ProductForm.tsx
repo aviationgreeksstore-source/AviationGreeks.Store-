@@ -16,6 +16,24 @@ type ProductVariant = {
     name: string;
     value: string;
   }[];
+  components?: {
+    edges: Array<{
+      node: {
+        quantity: number;
+        productVariant: {
+          id: string;
+          title: string;
+          image?: {
+            url: string;
+            altText?: string;
+          } | null;
+          product: {
+            title: string;
+          };
+        };
+      };
+    }>;
+  };
 };
 
 export default function ProductForm({
@@ -95,6 +113,44 @@ export default function ProductForm({
           <p className="text-red-500 text-sm font-mono animate-pulse">
             PLEASE SELECT A {options.find((opt) => !selectedOptions[opt.name])?.name.toUpperCase()} BEFORE ADDING TO CART
           </p>
+        )}
+
+        {selectedVariant?.components?.edges && selectedVariant.components.edges.length > 0 && (
+          <div className="bg-zinc-950 border border-white/20 p-4 mt-2">
+            <h3 className="text-xs font-bold font-mono tracking-[0.2em] text-white/50 border-b border-white/10 pb-2 mb-3">
+              PAYLOAD MANIFEST // BUNDLE CONTENTS
+            </h3>
+            <ul className="space-y-3">
+              {selectedVariant.components.edges.map(({ node }) => (
+                <li key={node.productVariant.id} className="flex items-center gap-3">
+                  {node.productVariant.image ? (
+                    <img 
+                      src={node.productVariant.image.url} 
+                      alt={node.productVariant.image.altText || node.productVariant.title} 
+                      className="w-10 h-10 object-cover bg-zinc-900 border border-white/10"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 bg-zinc-900 border border-white/10 flex items-center justify-center">
+                      <span className="text-[8px] text-white/30 font-mono text-center">NO<br/>IMG</span>
+                    </div>
+                  )}
+                  <div className="flex-1 flex justify-between items-center text-sm font-mono text-gray-300">
+                    <div className="flex flex-col">
+                      <span className="text-white truncate max-w-[200px]" title={node.productVariant.product.title}>
+                        {node.productVariant.product.title}
+                      </span>
+                      {node.productVariant.title !== 'Default Title' && (
+                        <span className="text-white/50 text-xs">
+                          {node.productVariant.title}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-white font-bold ml-2">x{node.quantity}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         <AddToCartButton 

@@ -282,7 +282,7 @@ export async function getCollections(): Promise<any[]> {
   try {
     const { body } = await shopifyFetch<{ data: { collections: { edges: any[] } } }>({
       query: getCollectionsQuery,
-      tags: ['collections']
+      cache: 'no-store'
     });
     return body.data?.collections?.edges?.map((edge) => edge.node) || [];
   } catch (error) {
@@ -296,7 +296,7 @@ export async function getCollection(handle: string): Promise<any> {
     const { body } = await shopifyFetch<{ data: { collection: any } }>({
       query: getCollectionQuery,
       variables: { handle },
-      tags: ['collections']
+      cache: 'no-store'
     });
     return body.data?.collection;
   } catch (error) {
@@ -337,6 +337,7 @@ export async function getProductRecommendations(productId: string): Promise<any[
     const { body } = await shopifyFetch<{ data: { productRecommendations: any[] } }>({
       query: getProductRecommendationsQuery,
       variables: { productId },
+      cache: 'no-store'
     });
     return body.data?.productRecommendations || [];
   } catch (error) {
@@ -374,6 +375,7 @@ export async function searchProducts(query: string): Promise<any[]> {
     const { body } = await shopifyFetch<{ data: { products: { edges: any[] } } }>({
       query: searchProductsQuery,
       variables: { query },
+      cache: 'no-store'
     });
     return body.data?.products?.edges?.map((edge) => edge.node) || [];
   } catch (error) {
