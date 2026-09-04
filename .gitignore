@@ -38,3 +38,5 @@ next-env.d.ts
 # firebase
 .firebase/
 firebase-debug.log
+deploy.bat
+

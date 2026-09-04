@@ -33,7 +33,7 @@ export default function LandingClient({ products, shopByCategory }: { products: 
               Global Shipping
             </h3>
             <p className="text-sm text-gray-400">
-              We deliver your gear anywhere on the planet.
+              We deliver your gear anywhere on the planet. Free shipping in the EU.
             </p>
           </motion.div>
           <motion.div
@@ -209,9 +209,29 @@ export default function LandingClient({ products, shopByCategory }: { products: 
             <h4 className="text-2xl font-black uppercase tracking-widest mb-4">
               Join the Squadron
             </h4>
-            <p className="text-gray-400 text-sm max-w-md">
+            <p className="text-gray-400 text-sm max-w-md mb-4">
               Subscribe for exclusive drops, early access, and flight logs.
             </p>
+            <div className="flex flex-wrap items-center gap-2 max-w-lg">
+              {[
+                { name: "Discord (Hellenic Aviation Hub)", href: "https://discord.gg/aviationgreeks" },
+                { name: "YouTube", href: "https://youtube.com/@AviationGreeks" },
+                { name: "Instagram", href: "https://instagram.com/aviationgreeks" },
+                { name: "X", href: "https://x.com/aviationgreeks" },
+                { name: "TikTok", href: "https://www.tiktok.com/@aviationgreeks" },
+                { name: "Facebook", href: "https://www.facebook.com/aviationgreeks" },
+              ].map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono tracking-wider text-gray-400 hover:text-white border border-[#333333] hover:border-aegean-blue px-2.5 py-1 rounded-sm transition-colors"
+                >
+                  {s.name}
+                </a>
+              ))}
+            </div>
           </div>
           <NewsletterForm variant="inline" />
         </div>

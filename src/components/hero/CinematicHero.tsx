@@ -6,6 +6,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { approachStaggerContainer, hudRevealVariant } from "@/lib/animations"; // Use existing animation variants
 
+const heroAssetUrl = "[INSERT_NEW_ASSET_URL_HERE]";
+
 export default function CinematicHero() {
   const [isLoaded, setIsLoaded] = useReactState(false);
 
@@ -13,10 +15,10 @@ export default function CinematicHero() {
     <section className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden border-b border-[#333333]">
       {/* Background Image */}
       <Image
-        src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=2000&auto=format&fit=crop"
+        src={heroAssetUrl}
         alt="Aviation cinematic background"
         fill
-        priority
+        priority={true}
         sizes="100vw"
         onLoad={() => setIsLoaded(true)}
         className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ease-in-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}

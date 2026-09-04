@@ -93,9 +93,9 @@ export default function ProductForm({
                   disabled={!isAvailable}
                   className={`min-w-[4rem] px-4 py-3 text-sm font-mono tracking-widest border transition-all duration-200 uppercase ${
                     isSelected
-                      ? 'border-white bg-white text-black'
+                      ? 'border-blue-600 bg-blue-600 text-white font-bold shadow-[0_0_15px_rgba(37,99,235,0.3)]'
                       : isAvailable
-                      ? 'border-white/20 bg-transparent text-gray-300 hover:border-white/60 hover:text-white'
+                      ? 'border-white/20 bg-transparent text-gray-300 hover:border-blue-500/60 hover:text-white'
                       : 'border-white/10 bg-transparent text-white/20 cursor-not-allowed'
                   }`}
                 >

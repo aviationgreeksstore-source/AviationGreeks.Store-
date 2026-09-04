@@ -21,11 +21,11 @@ export default function PriorityLogisticsBar() {
       <div className="flex justify-between items-end mb-2 font-mono text-xs md:text-sm tracking-wide">
         {!isThresholdMet ? (
           <span className="text-amber-500 font-bold">
-            [ ADD €{remaining.toFixed(2)} MORE FOR FREE SHIPPING ]
+            [ ADD €{remaining.toFixed(2)} MORE FOR FREE EU SHIPPING ]
           </span>
         ) : (
           <span className="text-emerald-500 font-bold">
-            [ STATUS: FREE SHIPPING UNLOCKED ]
+            [ STATUS: FREE EU SHIPPING UNLOCKED ]
           </span>
         )}
       </div>

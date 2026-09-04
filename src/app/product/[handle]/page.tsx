@@ -18,9 +18,13 @@ const getProductQuery = `
       shakeDiscount: metafield(namespace: "custom", key: "shake_discount_code") {
         value
       }
-      featuredImage {
-        url
-        altText
+      images(first: 3) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
       }
       priceRange {
         minVariantPrice {
@@ -75,9 +79,13 @@ type Product = {
   shakeDiscount?: {
     value: string;
   } | null;
-  featuredImage?: {
-    url: string;
-    altText: string;
+  images?: {
+    edges: Array<{
+      node: {
+        url: string;
+        altText: string;
+      };
+    }>;
   } | null;
   priceRange: {
     minVariantPrice: {
@@ -164,14 +172,14 @@ export default async function ProductPage({ params }: { params: { handle: string
       <main className="max-w-7xl mx-auto px-4 py-12 md:py-24">
         <div className="flex flex-col md:flex-row gap-12 lg:gap-24">
           
-          {/* Left Column: Image */}
-          <div className="flex-1">
+          {/* Left Column: Image(s) */}
+          <div className="flex-1 flex flex-col gap-4">
             <ShakeToIdentRadar discountCode={product.shakeDiscount?.value}>
               <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
-                {product.featuredImage?.url ? (
+                {product.images?.edges && product.images.edges.length > 0 ? (
                   <OptimizedImage 
-                    src={product.featuredImage.url} 
-                    alt={product.featuredImage.altText || product.title}
+                    src={product.images.edges[0].node.url} 
+                    alt={product.images.edges[0].node.altText || product.title}
                     fill
                     priority={true} 
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -184,6 +192,22 @@ export default async function ProductPage({ params }: { params: { handle: string
                 )}
               </div>
             </ShakeToIdentRadar>
+            
+            {product.images?.edges && product.images.edges.length > 1 && (
+              <div className="grid grid-cols-2 gap-4">
+                {product.images.edges.slice(1).map((edge, index) => (
+                  <div key={index} className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
+                    <OptimizedImage 
+                      src={edge.node.url} 
+                      alt={edge.node.altText || `${product.title} image ${index + 2}`}
+                      fill
+                      sizes="(max-width: 1024px) 50vw, 25vw"
+                      className="object-cover w-full h-full pointer-events-none"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Right Column: Details */}
@@ -195,19 +219,21 @@ export default async function ProductPage({ params }: { params: { handle: string
               <p className="text-2xl text-gray-300 font-light mb-8">{formattedPrice}</p>
             </FadeIn>
             
-            <FadeIn delay={0.3}>
+            <div className="sticky top-24 z-30 bg-black pt-4 pb-2 mb-8 border-b border-white/10">
+              <FadeIn delay={0.3}>
+                <ProductForm 
+                  options={options} 
+                  variants={variants} 
+                  productTitle={product.title} 
+                  price={formattedPrice} 
+                />
+              </FadeIn>
+            </div>
+
+            <FadeIn delay={0.4}>
               <div 
                 className="prose prose-invert prose-p:text-gray-400 max-w-none mb-12 font-light leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-              />
-            </FadeIn>
-
-            <FadeIn delay={0.4}>
-              <ProductForm 
-                options={options} 
-                variants={variants} 
-                productTitle={product.title} 
-                price={formattedPrice} 
               />
             </FadeIn>
           </div>

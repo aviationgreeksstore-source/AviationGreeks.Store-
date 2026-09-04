@@ -10,7 +10,7 @@ export default function AnnouncementBar() {
 
   return (
     <div className="relative w-full bg-aegean-blue text-white py-2 px-10 md:px-4 text-center text-xs sm:text-sm font-bold tracking-wider">
-      ✈️ FREE WORLDWIDE SHIPPING ON ORDERS OVER €50
+      EU Free Shipping over 50€
       
       <button
         onClick={() => setIsVisible(false)}

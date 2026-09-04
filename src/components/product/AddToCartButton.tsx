@@ -40,7 +40,7 @@ export default function AddToCartButton({
     <button 
       onClick={handleAddToCart}
       disabled={isAdding}
-      className={`w-full md:w-auto px-12 py-5 bg-aviation-blue text-white font-bold uppercase tracking-widest hover:bg-blue-700 transition-colors rounded-sm flex items-center justify-center space-x-3 ${isAdding ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`w-full md:w-auto px-12 py-5 bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-widest transition-colors rounded-sm flex items-center justify-center space-x-3 shadow-[0_0_20px_rgba(37,99,235,0.4)] ${isAdding ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
       <span>{isAdding ? 'Adding...' : 'Add to Cart'}</span>
       {!isAdding && (

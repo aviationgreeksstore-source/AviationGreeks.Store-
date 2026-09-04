@@ -44,10 +44,22 @@ export default function CommunityPage() {
               stat: "Join Discussion",
             },
             {
-              title: "Discord",
-              desc: "Our official hub. Chat with the crew and talk aviation.",
+              title: "Discord (Hellenic Aviation Hub)",
+              desc: "Our official flight hub. Chat with the crew and talk aviation.",
               href: "https://discord.gg/aviationgreeks",
-              stat: "Join Server",
+              stat: "Join Hub",
+            },
+            {
+              title: "TikTok",
+              desc: "Quick clips, viral flight deck moments, and runway action.",
+              href: "https://www.tiktok.com/@aviationgreeks",
+              stat: "Follow",
+            },
+            {
+              title: "Facebook",
+              desc: "Aviation news, community discussions, and updates.",
+              href: "https://www.facebook.com/aviationgreeks",
+              stat: "Connect",
             }
           ].map((social, idx) => (
             <a
