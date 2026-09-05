@@ -18,6 +18,32 @@ export default function LandingClient({ products, shopByCategory }: { products: 
     <div className="bg-[#000000] text-[#FFFFFF] selection:bg-aegean-blue selection:text-white">
       <CinematicHero />
 
+      {/* Athens Flying Week 2026 Mission Banner */}
+      <section className="bg-gradient-to-r from-neutral-950 via-blue-950/40 to-neutral-950 border-b border-amber-400/30 py-4 px-6 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-center sm:text-left flex-wrap">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400"></span>
+            </span>
+            <span className="font-mono text-xs font-black uppercase tracking-widest text-amber-400 bg-amber-400/10 px-2 py-0.5 border border-amber-400/30 rounded-xs">
+              AIRSHOW LIVE // TANAGRA (LGTG)
+            </span>
+            <span className="text-sm font-bold tracking-wide text-white">
+              Athens Flying Week 2026 Special: Use code <span className="text-amber-400 font-mono font-black">AFW2026</span> for 15% off
+            </span>
+          </div>
+
+          <Link
+            href="/search?q=Athens+Flying+Week"
+            className="shrink-0 flex items-center gap-2 text-xs font-black uppercase tracking-widest bg-amber-400 text-black hover:bg-amber-300 px-4 py-2 rounded-xs transition-colors shadow-[0_0_15px_rgba(251,191,36,0.3)]"
+          >
+            <span>Explore AFW Fleet</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
+
       {/* Benefit Bar (Risk Reversal) */}
       <section className="border-b border-[#333333] bg-[#0A0A0A]">
         <div className="max-w-7xl mx-auto py-12 px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
