@@ -28,14 +28,6 @@ export default function Navbar() {
         {/* Left Side: Desktop Left Links */}
         <div className="flex-1 flex items-center justify-start gap-6">
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/search?q=Athens+Flying+Week" className="group relative text-xs font-black tracking-[0.2em] text-amber-400 uppercase hover:text-amber-300 transition-colors py-1 flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
-              </span>
-              AFW 2026
-              <span className="absolute inset-x-0 -bottom-1 h-[2px] bg-amber-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out" />
-            </Link>
             <Link href="/collections" className="group relative text-xs font-bold tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition-colors py-1">
               Shop the Fleet
               <span className="absolute inset-x-0 -bottom-1 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out" />
@@ -48,12 +40,12 @@ export default function Navbar() {
         </div>
 
         {/* Center: Brand Logo */}
-        <div className="shrink-0 flex flex-col items-center justify-center">
+        <div className="shrink-0 flex items-center justify-center">
           <Link href="/" className="group flex flex-col items-center">
-            <span className="text-lg sm:text-xl md:text-2xl font-black tracking-[0.2em] md:tracking-[0.25em] uppercase text-white group-hover:text-amber-400 transition-colors duration-500">
+            <span className="text-lg sm:text-xl md:text-2xl font-black tracking-[0.2em] md:tracking-[0.25em] uppercase text-white group-hover:text-flight-amber transition-colors duration-500">
               AviationGreeks
             </span>
-            <div className="w-1/2 h-[1px] bg-white/20 mt-1 md:mt-2 group-hover:w-full group-hover:bg-amber-400 transition-all duration-500" />
+            <div className="w-1/2 h-[1px] bg-white/20 mt-1 md:mt-2 group-hover:w-full group-hover:bg-flight-amber transition-all duration-500" />
           </Link>
         </div>
 
@@ -76,10 +68,10 @@ export default function Navbar() {
             <form onSubmit={handleSearch} className="hidden md:flex items-center relative group">
               <input 
                 type="text" 
-                placeholder="Search AFW 2026..." 
+                placeholder="Search..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent border-b border-white/20 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400 px-2 py-1 w-28 focus:w-48 transition-all duration-500"
+                className="bg-transparent border-b border-white/20 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white px-2 py-1 w-24 focus:w-48 transition-all duration-500"
               />
               <button type="submit" className="absolute right-0 p-1 text-neutral-400 hover:text-white transition-colors" aria-label="Search">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -140,10 +132,6 @@ export default function Navbar() {
             </div>
             
             <nav className="flex flex-col space-y-6 text-center mt-4">
-              <Link href="/search?q=Athens+Flying+Week" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-black uppercase tracking-wider text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping inline-block" />
-                AFW 2026 Live
-              </Link>
               <Link href="/collections" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">Shop the Fleet</Link>
               <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">About Us</Link>
               <Link href="/media" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-bold uppercase tracking-wider text-white hover:text-flight-amber transition-colors">Media</Link>
@@ -158,7 +146,7 @@ export default function Navbar() {
               <div className="flex items-center w-full max-w-full sm:max-w-sm border-b border-white/20 pb-2">
                 <input 
                   type="text" 
-                  placeholder="Search AFW '26 gear..." 
+                  placeholder="Search gear..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="bg-transparent text-white placeholder-gray-400 focus:outline-none flex-1 px-2 py-2 text-base md:text-lg w-full"

@@ -19,7 +19,6 @@ import AcarsAddToCartModal from "@/components/cart/AcarsAddToCartModal";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
-import LiveMetar from "@/components/layout/LiveMetar";
 import NewsletterFlyout from "@/components/newsletter/NewsletterFlyout";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import AltimeterScrollbar from "@/components/layout/AltimeterScrollbar";

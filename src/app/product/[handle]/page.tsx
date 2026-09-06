@@ -174,7 +174,7 @@ export default async function ProductPage({ params }: { params: { handle: string
           
           {/* Left Column: Image(s) */}
           <div className="flex-1 flex flex-col gap-4">
-            <ShakeToIdentRadar discountCode={product.shakeDiscount?.value || "AFW2026"}>
+            <ShakeToIdentRadar discountCode={product.shakeDiscount?.value || "FLIGHTOPS"}>
               <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative">
                 {product.images?.edges && product.images.edges.length > 0 ? (
                   <OptimizedImage 

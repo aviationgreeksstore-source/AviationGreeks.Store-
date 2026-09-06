@@ -10,11 +10,11 @@ export default function AnnouncementBar() {
 
   return (
     <div className="relative w-full bg-aegean-blue text-white py-2 px-10 md:px-4 text-center text-xs sm:text-sm font-bold tracking-wider flex items-center justify-center flex-wrap gap-2">
-      <span className="inline-flex items-center px-2 py-0.5 rounded-xs text-[10px] sm:text-xs font-black bg-amber-400 text-black uppercase tracking-widest animate-pulse">
-        AFW 2026 LIVE
+      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[10px] sm:text-xs font-black bg-black/40 text-sky-200 border border-white/20 uppercase tracking-widest">
+        FLIGHT OPS
       </span>
       <span>
-        ATHENS FLYING WEEK SPECIAL // USE CODE <strong className="underline decoration-amber-400 text-amber-300 font-black">AFW2026</strong> FOR 15% OFF // EU FREE SHIPPING OVER 50€
+        EU FREE SHIPPING OVER 50€ // USE CODE <strong className="underline decoration-white/60 text-white font-black">FLIGHTOPS</strong> FOR 10% OFF
       </span>
       
       <button

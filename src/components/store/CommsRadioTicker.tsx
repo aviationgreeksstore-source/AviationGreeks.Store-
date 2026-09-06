@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
 
 const radioMessages = [
-  "[ 🛩️ ATHENS FLYING WEEK 2026 ACTIVE // TANAGRA LGTG ]",
-  "[ AIRSHOW DROP: USE CODE 'AFW2026' FOR 15% OFF ]",
-  "[ FREQ ACTIVE // COMMS 122.800 // SQUADRON AT TANAGRA ]",
+  "[ FREQ ACTIVE // COMMS 122.800 ]",
+  "[ HELLENIC RADAR ONLINE // ATHENS FIR SECTOR ]",
+  "[ ELEFTHERIOS VENIZELOS ATIS // RUNWAY 03R/21L IN OPS ]",
+  "[ SQUAWK 7000 ACTIVE // HELLENIC AIRSPACE RADIAL 090 ]",
   "[ 412 PILOTS ON DATALINK ]",
+  "[ USE CODE 'FLIGHTOPS' FOR 10% OFF ]",
   "[ NEW DROP ANNOUNCED IN #COMMS ]",
   "[ AVIATION GREEKS ELITE LOUNGE ONLINE ]",
 ];
